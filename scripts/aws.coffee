@@ -171,5 +171,5 @@ module.exports = (robot) ->
     getRegionQueues region, msg for region in regions.split ','
   robot.respond /(^|\W)ec2 status\ ?(.*)(\z|\W|$)/i, (msg) ->
     regions = process.env?.HUBOT_AWS_EC2_REGIONS ? defaultRegions
-    nama = msg.match[1] ? ''
+    nama = msg.match[2] ? ''
     getRegionInstances region, msg, nama for region in regions.split ','
