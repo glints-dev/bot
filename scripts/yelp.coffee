@@ -75,7 +75,7 @@ lunchMe = (msg, query, random = true) ->
     location = [location, 'Singapore'].join(', ')
 
   # Perform the search
-  msg.send("Looking for #{query} around #{location}...")
+  # msg.send("Looking for #{query} around #{location}...")
   yelp.search category_filter: null, term: query, radius_filter: radius, sort: sort, limit: 20, location: location, (error, data) ->
     if error != null
       console.log error
@@ -92,6 +92,10 @@ lunchMe = (msg, query, random = true) ->
 
 
 module.exports = (robot) ->
+  robot.respond /(I|she|he|we|they|everyone)(.*)hungry/i, (msg) ->
+    query = 'food'
+    lunchMe msg, query
+
   robot.respond /where (can|should|shall) \w+ (eat|go for)(.*)/i, (msg) ->
     query = msg.match[3]
     lunchMe msg, query
