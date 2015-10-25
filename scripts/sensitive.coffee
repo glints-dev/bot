@@ -17,6 +17,7 @@ messages = [
   "Is that tone really necessary?"
   "Robots have feelings too, you know."
   "You should try to be nicer."
+  "*sizzle* Ouch, hear those burn marks on my metal heart?"
   "Sticks and stones cannot pierce my anodized exterior, but words *do* hurt me."
   "I'm sorry, I'll try to do better next time."
   "https://p.twimg.com/AoTI6tLCIAAITfB.jpg"
@@ -26,10 +27,7 @@ hurt_feelings = (msg) ->
   msg.send msg.random messages
 
 module.exports = (robot) ->
-  pejoratives = "stupid|buggy|useless|dumb|suck|crap|shitty|idiot"
+  pejoratives = "stupid|buggy|useless|dumb|suck|crap|shitty|idiot|fat|greedy|bad|evil|horrible"
 
-  r = new RegExp "\\b(you|u|is)\\b.*(#{pejoratives})", "i"
-  robot.respond r, hurt_feelings
-
-  r = new RegExp "(#{pejoratives}) ((ro)?bot|#{robot.name})", "i"
+  r = new RegExp "(#{pejoratives})", "i"
   robot.hear r, hurt_feelings

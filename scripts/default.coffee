@@ -114,9 +114,9 @@ module.exports = (robot) ->
           symbol = if diff>0 then ':thumbsup::skin-tone-2:' else if diff<0 then ':thumbsdown::skin-tone-6:' else ':fist:'
           switch mode
             when 'single'
-              msg.reply "Glints has #{count} #{resource} #{time} #{updown} #{count2} #{symbol} #{growth}" 
+              msg.reply "Glints has *#{count}* #{resource} #{time} #{updown} #{count2} #{symbol} #{growth}" 
             when 'summary'
-              msg.send "#{count} #{resource} #{updown} #{count2} #{symbol} #{growth}" 
+              msg.send "*#{count}* #{resource} #{updown} #{count2} #{symbol} #{growth}" 
 
   enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
   leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
