@@ -52,8 +52,7 @@ getRegionInstances = (region, msg, nama) ->
       instances = _.pluck instances, 'instancesSet'
       instances = _.flatten _.pluck instances, 'item'
 
-      msg.send "Found #{instances.length} instances for region #{region}..."
-      msg.send nama
+      final_instances = []
 
       for instance in instances
         do (instance) ->
@@ -102,7 +101,10 @@ getRegionInstances = (region, msg, nama) ->
           tags = _.flatten [instance.tagSet?.item ? []]
           name = (_.find tags, (t) -> t.key == 'Name')?.value ? 'missing'
 
-          msg.send "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
+          final_instances.push "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
+  
+      msg.send "Found #{final_instances.length} instances for region #{region}..."
+      msg.send final_instances.join('\n')
 
 
 getRegionQueues = (region, msg) ->
