@@ -48,7 +48,7 @@ token_secret = process.env.HUBOT_YELP_TOKEN_SECRET
 
 # Default search parameters
 start_address = process.env.HUBOT_YELP_SEARCH_ADDRESS or "one-North, Singapore"
-radius = process.env.HUBOT_YELP_SEARCH_RADIUS or 6000
+radius = process.env.HUBOT_YELP_SEARCH_RADIUS or 600
 sort = process.env.HUBOT_YELP_SORT or 0
 default_suggestion = process.env.HUBOT_YELP_DEFAULT_SUGGESTION or "Alicia's burnt rice"
 
@@ -69,7 +69,7 @@ lunchMe = (msg, query, random = true) ->
   query = split[0].trim()
   location = split[1]
   location = start_address if (typeof location == "undefined" || location == "")
-  location = location.trim()
+  location = location.trim().replace(/\?/, '')
   if location.toLowerCase().indexOf('singapore') == -1 and location.indexOf(',') == -1
     location = [location, 'Singapore'].join(', ')
 
