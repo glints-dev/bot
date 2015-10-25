@@ -68,7 +68,6 @@ lunchMe = (msg, query, random = true) ->
   split = query.split(/\snear|around|nearby|in|at\s/i)
   query = split[0].trim()
   location = split[1]
-  console.log split
   location = start_address if (typeof location == "undefined" || location == "")
   location = location.replace(/\?/, '').trim()
   if location.toLowerCase().indexOf('singapore') == -1 and location.indexOf(',') == -1
@@ -93,6 +92,7 @@ lunchMe = (msg, query, random = true) ->
 
 module.exports = (robot) ->
   robot.respond /where should|shall \w+ (eat|go for)(.*)/i, (msg) ->
+    console.log msg, msg.match
     query = msg.match[2]
     lunchMe msg, query
 
