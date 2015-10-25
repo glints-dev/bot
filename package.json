@@ -6,6 +6,7 @@
   "description": "Just A Rather Very Intelligent System",
   "dependencies": {
     "aws2js": "^0.8.3",
+    "bang": "^1.0.4",
     "hubot": "^2.16.0",
     "hubot-9gag": "^0.2.0",
     "hubot-ambush": "0.0.3",
@@ -22,6 +23,7 @@
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^3.3.0",
     "moment": "^2.10.6",
+    "shellwords": "^0.1.0",
     "underscore": "^1.8.3"
   },
   "engines": {
