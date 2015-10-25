@@ -65,7 +65,7 @@ lunchMe = (msg, query, random = true) ->
   query = "food" if query == ""
 
   # Extract a location from the query
-  split = query.split(/\snear|around|nearby|in\s/i)
+  split = query.split(/\snear|around|nearby|in|at\s/i)
   query = split[0].trim()
   location = split[1]
   location = start_address if (typeof location == "undefined" || location == "")
