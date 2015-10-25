@@ -53,6 +53,7 @@ getRegionInstances = (region, msg, nama) ->
       instances = _.flatten _.pluck instances, 'item'
 
       msg.send "Found #{instances.length} instances for region #{region}..."
+      msg.send  instances.toString()
 
       for instance in instances
         do (instance) ->
@@ -102,6 +103,7 @@ getRegionInstances = (region, msg, nama) ->
           name = (_.find tags, (t) -> t.key == 'Name')?.value ? 'missing'
 
           msg.send "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
+
 
 getRegionQueues = (region, msg) ->
   sqs.setRegion(region).request 'ListQueues', {}, (error, queues) ->
