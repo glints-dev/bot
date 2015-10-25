@@ -5,6 +5,7 @@
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
   "dependencies": {
+    "aws2js": "^0.8.3",
     "hubot": "^2.16.0",
     "hubot-9gag": "^0.2.0",
     "hubot-ambush": "0.0.3",
@@ -19,7 +20,9 @@
     "hubot-rules": "^0.1.1",
     "hubot-scripts": "^2.16.2",
     "hubot-shipit": "^0.2.0",
-    "hubot-slack": "^3.3.0"
+    "hubot-slack": "^3.3.0",
+    "moment": "^2.10.6",
+    "underscore": "^1.8.3"
   },
   "engines": {
     "node": "0.10.x"
