@@ -101,9 +101,9 @@ getRegionInstances = (region, msg, nama) ->
           tags = _.flatten [instance.tagSet?.item ? []]
           name = (_.find tags, (t) -> t.key == 'Name')?.value ? 'missing'
 
-          final_instances.push "#{name}"
+          final_instances.push "#{prefix} #{name} #{state} since #{launchTime}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
 
-          # final_instances.push "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
+          # final_instances.push "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" 
   
       msg.send "Found #{final_instances.length} instance(s) for region #{region}..."
       msg.send final_instances.join('\n')
