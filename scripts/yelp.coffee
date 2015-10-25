@@ -92,7 +92,7 @@ lunchMe = (msg, query, random = true) ->
 
 
 module.exports = (robot) ->
-  robot.respond /where (should|shall) \w+ (eat|go for)(.*)/i, (msg) ->
+  robot.respond /where (can|should|shall) \w+ (eat|go for)(.*)/i, (msg) ->
     query = msg.match[3]
     lunchMe msg, query
 
