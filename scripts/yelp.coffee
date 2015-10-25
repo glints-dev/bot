@@ -47,10 +47,10 @@ token = process.env.HUBOT_YELP_TOKEN
 token_secret = process.env.HUBOT_YELP_TOKEN_SECRET
 
 # Default search parameters
-start_address = process.env.HUBOT_YELP_SEARCH_ADDRESS or "Old Airport Road"
-radius = process.env.HUBOT_YELP_SEARCH_RADIUS or 600
+start_address = process.env.HUBOT_YELP_SEARCH_ADDRESS or "one-North, Singapore"
+radius = process.env.HUBOT_YELP_SEARCH_RADIUS or 6000
 sort = process.env.HUBOT_YELP_SORT or 0
-default_suggestion = process.env.HUBOT_YELP_DEFAULT_SUGGESTION or "Alicia's Burnt Rice"
+default_suggestion = process.env.HUBOT_YELP_DEFAULT_SUGGESTION or "Alicia's burnt rice"
 
 trim_re = /^\s+|\s+$|[\.!\?]+$/g
 
@@ -66,9 +66,12 @@ lunchMe = (msg, query, random = true) ->
 
   # Extract a location from the query
   split = query.split(/\snear|around|nearby|in\s/i)
-  query = split[0]
+  query = split[0].trim()
   location = split[1]
   location = start_address if (typeof location == "undefined" || location == "")
+  location = location.trim()
+  if location.toLowerCase().indexOf('singapore') == -1 and location.indexOf(',') == -1
+    location = [location, 'Singapore'].join(', ')
 
   # Perform the search
   msg.send("Looking for #{query} around #{location}...")
@@ -100,7 +103,7 @@ module.exports = (robot) ->
     query = msg.match[1]
     lunchMe msg, query
 
-  robot.respond /(.*) nearby$/i, (msg) ->
+  robot.respond /(.*) nearby|around$/i, (msg) ->
     query = msg.match[1]
     lunchMe msg, query
 
