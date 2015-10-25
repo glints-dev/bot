@@ -53,7 +53,7 @@ getRegionInstances = (region, msg, nama) ->
       instances = _.flatten _.pluck instances, 'item'
 
       msg.send "Found #{instances.length} instances for region #{region}..."
-      msg.send  instances.toString()
+      msg.send nama
 
       for instance in instances
         do (instance) ->
