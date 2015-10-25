@@ -91,13 +91,13 @@ lunchMe = (msg, query, random = true) ->
 
 
 module.exports = (robot) ->
-  robot.respond /where should|shall \w+ (eat|go for)(.*)/i, (msg) ->
+  robot.respond /where (should|shall) \w+ (eat|go for)(.*)/i, (msg) ->
     console.log msg
     console.log 'HERE', msg.match.
-    query = msg.match[2]
+    query = msg.match[3]
     lunchMe msg, query
 
-  robot.respond /what\'?s.*( to eat| good)? for(.*)/i, (msg) ->
+  robot.respond /what\'?s( to eat| good)? for(.*)/i, (msg) ->
     query = msg.match[2]
     lunchMe msg, query
 
