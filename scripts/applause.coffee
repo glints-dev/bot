@@ -62,6 +62,6 @@ images =
   ]
 
 module.exports = (robot) ->
-  robot.hear /\b(applau(d|se)|bravo|sarcastic applause|(slow|sarcastic) clap)\b/i, (msg) ->
+  robot.hear /\b(applau(d|se)|bravo|sarcastic applause|(slow|sarcastic) clap|good job|well done|awesome)\b/i, (msg) ->
     type = if (/sarcastic/i).test(msg.message.text) then images.insincere else images.sincere
     msg.send msg.random type
