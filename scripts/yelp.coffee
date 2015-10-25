@@ -69,6 +69,7 @@ lunchMe = (msg, query, random = true) ->
   query = split[0].trim()
   location = split[1]
   msg.send split
+  console.log split
   location = start_address if (typeof location == "undefined" || location == "")
   location = location.trim().replace(/\?/, '')
   if location.toLowerCase().indexOf('singapore') == -1 and location.indexOf(',') == -1
