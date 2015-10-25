@@ -14,7 +14,7 @@
 #   tantalor
 
 module.exports = (robot) ->
-  robot.respond /(abs|abstract/explain/define) (.+)/i, (res) ->
+  robot.respond /(abs|abstract|explain|define) (.+)/i, (res) ->
     abstract_url = "http://api.duckduckgo.com/?format=json&q=#{encodeURIComponent(res.match[2])}"
     res.http(abstract_url)
       .header('User-Agent', 'Hubot Abstract Script')
