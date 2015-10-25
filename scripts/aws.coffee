@@ -39,7 +39,7 @@ ec2 = aws
   .load('ec2', key, secret)
   .setApiVersion('2012-05-01')
 
-getRegionInstances = (region, msg) ->
+getRegionInstances = (region, msg, nama) ->
   ec2.setRegion(region).request 'DescribeInstances', (error, reservations) ->
     if error?
       msg.send "Failed to describe instances for region #{region} - error #{error}"
@@ -101,7 +101,7 @@ getRegionInstances = (region, msg) ->
           tags = _.flatten [instance.tagSet?.item ? []]
           name = (_.find tags, (t) -> t.key == 'Name')?.value ? 'missing'
 
-          msg.send "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}"
+          msg.send "#{prefix} [#{state}] - #{name} / #{type} [#{devType} #{arch}] / #{dnsName} / #{region} / #{id} - started #{launchTime} #{suffix}" if name.toLowerCase().indexOf(nama.toLowerCase()) > -1
 
 getRegionQueues = (region, msg) ->
   sqs.setRegion(region).request 'ListQueues', {}, (error, queues) ->
@@ -167,6 +167,7 @@ module.exports = (robot) ->
   robot.respond /(^|\W)sqs status(\z|\W|$)/i, (msg) ->
     regions = process.env?.HUBOT_AWS_SQS_REGIONS ? defaultRegions
     getRegionQueues region, msg for region in regions.split ','
-  robot.respond /(^|\W)ec2 status(\z|\W|$)/i, (msg) ->
+  robot.respond /(^|\W)ec2 status\ ?(.*)(\z|\W|$)/i, (msg) ->
     regions = process.env?.HUBOT_AWS_EC2_REGIONS ? defaultRegions
-    getRegionInstances region, msg for region in regions.split ','
+    nama = msg.match[1] ? ''
+    getRegionInstances region, msg, nama for region in regions.split ','
