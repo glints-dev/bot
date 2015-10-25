@@ -9,5 +9,6 @@
   "hubot-redis-brain",
   "hubot-rules",
   "hubot-shipit",
-  "hubot-9gag"
+  "hubot-9gag",
+  "hubot-ambush"
 ]
