@@ -25,5 +25,5 @@ responses = [
 ]
 
 module.exports = (robot) ->
-  robot.hear /(:poultry_leg:|:rice:|:sushi:)/i, (msg) ->
+  robot.hear /(:poultry_leg:|:rice:|:sushi:|:cookie:)/i, (msg) ->
     msg.send msg.random responses
