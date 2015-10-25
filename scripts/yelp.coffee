@@ -91,8 +91,16 @@ module.exports = (robot) ->
     query = msg.match[2]
     lunchMe msg, query
 
-  robot.respond /what\'?s( to eat)? for(.*)/i, (msg) ->
+  robot.respond /what\'?s( to eat| good)? for(.*)/i, (msg) ->
     query = msg.match[2]
+    lunchMe msg, query
+
+  robot.respond /^nearby(.*)/i, (msg) ->
+    query = msg.match[1]
+    lunchMe msg, query
+
+  robot.respond /(.*) nearby$/i, (msg) ->
+    query = msg.match[1]
     lunchMe msg, query
 
   robot.respond /yelp me(.*)/i, (msg) ->
