@@ -23,9 +23,9 @@ module.exports = (robot) ->
   robot.hear /I like pie/i, (res) ->
     res.emote "makes a freshly baked pie"
   
-  lulz = ['lol', 'rofl', 'lmao']
+  lulz = ['lulz', 'rofl', 'lmao', ':satisfied:']
   
-  robot.respond /lulz/i, (res) ->
+  robot.respond /(lol|haha)/i, (res) ->
     res.send res.random lulz
   
   robot.topic (res) ->
@@ -48,7 +48,7 @@ module.exports = (robot) ->
       return
     res.send "#{answer}, but what is the question?"
   
-  robot.respond /you are a little slow/, (res) ->
+  robot.respond /you(.*)slow/, (res) ->
     setTimeout () ->
       res.send "Who you calling 'slow'?"
     , 60 * 1000
