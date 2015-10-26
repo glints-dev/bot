@@ -38,7 +38,6 @@ module.exports = (robot) ->
       feed_url = encodeURIComponent(server_url + '/?n=' + arg)
       msg.send "Attendance for #{arg}: \n" + 'http://www.seekfreak.com/rss/?url=' + feed_url
    else if action == 'list'
-      msg.reply action
       msg.http(server_url + '/')
          .query(n: arg)
          .query(l: event || 100)
@@ -75,7 +74,6 @@ module.exports = (robot) ->
           msg.send reply "An error occured on " + event + " feed" 
 
     else if action == 'cancel' && arg != undefined
-      msg.reply action
       msg.http(server_url + '/')
        .query(n: arg)
        .query(l: event || 100)
