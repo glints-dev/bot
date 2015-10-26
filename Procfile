@@ -1,2 +1,2 @@
-web: node index.js
-worker: bin/hubot -a slack
+worker: node index.js
+web: bin/hubot -a slack
