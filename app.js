@@ -1,9 +1,9 @@
 var express = require('express');
 var port = process.env.PORT || 3000;
-var app = express.createServer();
+var app = express();
+var http = require('http');
+var server = http.createServer(app);
 
 app.get('/', function(request, response) {
-    response.sendfile(__dirname + '/index.html');
-}).configure(function() {
-    app.use('/images', express.static(__dirname + '/images'));
+    response.sendFile(__dirname + '/index.html');
 }).listen(port);
