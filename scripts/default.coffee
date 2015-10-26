@@ -34,7 +34,7 @@ module.exports = (robot) ->
   robot.respond /(lol|haha)/i, (res) ->
     res.send res.random lulz
   
-  robot.respond /.*(masterpiece|disgusting|L O L).*/, (res) ->
+  robot.respond /.*(masterpiece|disgusting|L O L|fak).*/, (res) ->
     res.send 'http://itscomplicat3d.blogspot.sg/'
 
   robot.topic (res) ->

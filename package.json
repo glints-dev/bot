@@ -4,6 +4,9 @@
   "private": true,
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
+  "scripts" : {
+	"start": "node index.js"
+  },
   "dependencies": {
     "aws2js": "^0.8.3",
     "bang": "^1.0.4",
