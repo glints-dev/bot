@@ -77,10 +77,10 @@ module.exports = (robot) ->
         end = moment().startOf('month').format('L')
         startX = moment().startOf('month').subtract(2, 'M').format('L')
 
-    where['createdAt'] = {'gt': start} if !!start
-    where['createdAt']['lt'] = end if !!end
-    where2['createdAt'] = {'gt': startX} if !!startX
-    where2['createdAt']['lt'] = start if !!start
+    where['createdAt'] = {'gt': start.subtract(8, 'h')} if !!start
+    where['createdAt']['lt'] = end.subtract(8, 'h') if !!end
+    where2['createdAt'] = {'gt': startX.subtract(8, 'h')} if !!startX
+    where2['createdAt']['lt'] = start.subtract(8, 'h') if !!start
 
     if res == 'candidates' or res == 'companies'
       switch res
