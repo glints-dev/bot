@@ -27,7 +27,7 @@ hurt_feelings = (msg) ->
   msg.send msg.random messages
 
 module.exports = (robot) ->
-  pejoratives = "\b(stupid|buggy|useless|dumb|suck|crap|shitty|idiot|fat|greedy|bad|evil|horrible|freaking|damn)\b"
+  pejoratives = "stupid|buggy|useless|dumb|suck|crap|shitty|idiot|fat|greedy|evil|horrible|freak|damn|lazy|angry"
 
   r = new RegExp "(#{pejoratives})", "i"
   robot.hear r, hurt_feelings

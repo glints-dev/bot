@@ -22,7 +22,7 @@ module.exports = (robot) ->
   robot.respond /event (\+|\-|all|list|cancel) ([^ ]*)( .*)?/i, (msg) ->
    server_url = 'http://rsstodolist.appspot.com'
 
-   [action, arg, event] = [msg.match[1], escape(msg.match[2]), msg.match[3]]
+   [action, arg, event] = [msg.match[1].toLowerCase(), escape(msg.match[2]).toLowerCase(), msg.match[3].toLowerCase()]
    if action == '+' && arg != undefined
       msg.http(server_url + '/add')
          .query(n: event)
