@@ -20,14 +20,14 @@ messages = [
   "*sizzle* Ouch, hear those burn marks on my metal heart?"
   "Sticks and stones cannot pierce my anodized exterior, but words *do* hurt me."
   "I'm sorry, I'll try to do better next time."
-  "https://p.twimg.com/AoTI6tLCIAAITfB.jpg"
+  "https://s-media-cache-ak0.pinimg.com/736x/e6/78/f3/e678f395bfe15e0e3363112674e490a4.jpg"
 ]
 
 hurt_feelings = (msg) ->
   msg.send msg.random messages
 
 module.exports = (robot) ->
-  pejoratives = "stupid|buggy|useless|dumb|suck|crap|shitty|idiot|fat|greedy|bad|evil|horrible|freaking|damn"
+  pejoratives = "\b(stupid|buggy|useless|dumb|suck|crap|shitty|idiot|fat|greedy|bad|evil|horrible|freaking|damn)\b"
 
   r = new RegExp "(#{pejoratives})", "i"
   robot.hear r, hurt_feelings

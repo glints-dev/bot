@@ -19,11 +19,10 @@
 jsdom = require 'jsdom'
 
 module.exports = (robot) ->
-  robot.respond /event (\+|\-|all|list|\cancel) ([^ ]*)( .*)?/i, (msg) ->
+  robot.respond /event (\+|\-|all|list|cancel) ([^ ]*)( .*)?/i, (msg) ->
    server_url = 'http://rsstodolist.appspot.com'
 
    [action, arg, event] = [msg.match[1], escape(msg.match[2]), msg.match[3]]
-
    if action == '+' && arg != undefined
       msg.http(server_url + '/add')
          .query(n: event)
@@ -39,6 +38,7 @@ module.exports = (robot) ->
       feed_url = encodeURIComponent(server_url + '/?n=' + arg)
       msg.send "Attendance for #{arg}: \n" + 'http://www.seekfreak.com/rss/?url=' + feed_url
    else if action == 'list'
+      msg.reply action
       msg.http(server_url + '/')
          .query(n: arg)
          .query(l: event || 100)
@@ -58,6 +58,7 @@ module.exports = (robot) ->
                   i++
                   # reply += " #{description}" if description?
                   # reply += " (#{link})\n"
+              msg.send reply
             catch err
                   msg.reply err
     else if action == '-' && arg != undefined
@@ -74,6 +75,7 @@ module.exports = (robot) ->
           msg.send reply "An error occured on " + event + " feed" 
 
     else if action == 'cancel' && arg != undefined
+      msg.reply action
       msg.http(server_url + '/')
        .query(n: arg)
        .query(l: event || 100)
@@ -83,15 +85,15 @@ module.exports = (robot) ->
             xml = jsdom.jsdom(body)
             for item in xml.getElementsByTagName("rss")[0].getElementsByTagName("channel")[0].getElementsByTagName("item")
               do (item) ->
-                link = item.getElementsByTagName("link")[0].childNodes[0].nodeValue
+                link = item.getElementsByTagName("title")[0].childNodes[0].nodeValue
                 msg.http(server_url + '/del')
-                  .query(n: event)
+                  .query(n: arg)
                   .query(url: link.trim())
                   .get() (err, res, body) ->
                     status = res.statusCode 
 
                     if status == 200 || status == 302
-                       msg.send arg + ' removed from' + event
+                       msg.send link + ' removed from ' + arg
                     else
                        msg.reply "An error occured on " + event + " feed" 
                       msg.send reply "An error occured on " + event + " feed" 
