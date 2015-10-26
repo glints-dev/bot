@@ -19,7 +19,7 @@
 jsdom = require 'jsdom'
 
 module.exports = (robot) ->
-  robot.respond /event (\+|all|list) ([^ ]*)( .*)?/i, (msg) ->
+  robot.respond /event (\+|\-|all|list|\cancel) ([^ ]*)( .*)?/i, (msg) ->
    server_url = 'http://rsstodolist.appspot.com'
 
    [action, arg, event] = [msg.match[1], escape(msg.match[2]), msg.match[3]]
@@ -60,6 +60,40 @@ module.exports = (robot) ->
                   # reply += " (#{link})\n"
             catch err
                   msg.reply err
+    else if action == '-' && arg != undefined
+      msg.http(server_url + '/del')
+        .query(n: event)
+        .query(url: arg.trim())
+        .get() (err, res, body) ->
+          status = res.statusCode 
 
-            msg.send reply
+          if status == 200 || status == 302
+             msg.send arg + ' removed from' + event
+          else
+             msg.reply "An error occured on " + event + " feed" 
+          msg.send reply "An error occured on " + event + " feed" 
 
+    else if action == 'cancel' && arg != undefined
+      msg.http(server_url + '/')
+       .query(n: arg)
+       .query(l: event || 100)
+       .get() (err, res, body) ->
+          try
+            reply = ''
+            xml = jsdom.jsdom(body)
+            for item in xml.getElementsByTagName("rss")[0].getElementsByTagName("channel")[0].getElementsByTagName("item")
+              do (item) ->
+                link = item.getElementsByTagName("link")[0].childNodes[0].nodeValue
+                msg.http(server_url + '/del')
+                  .query(n: event)
+                  .query(url: link.trim())
+                  .get() (err, res, body) ->
+                    status = res.statusCode 
+
+                    if status == 200 || status == 302
+                       msg.send arg + ' removed from' + event
+                    else
+                       msg.reply "An error occured on " + event + " feed" 
+                      msg.send reply "An error occured on " + event + " feed" 
+          catch err
+                msg.reply err
