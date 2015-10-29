@@ -1,606 +1,0 @@
-Script started on Thu Oct 29 22:03:00 2015
-ls
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=sscript
-[J[0mscript    [J[1;31mscripts[0m/[J[A[0m[27m[24m[24Cscript[K
-[J[7mscript  [0m  [J[1;31mscripts[0m/[J[A[0m[27m[24m[24Cscript[K
-[7mscript  [0m  [7mscript  [0m  [A[0m[27m[24m[24Cscript[Ks[1m/[0m
-[10C[7mscripts/[0mscript    [A[0m[27m[24m[24Cscripts[1m/[0m[K
-[J[A[32C[0m [?1l>
-[J]2;scripts]1;scripts[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsaws.coffee         bang.coffee        botsnack.coffee    default.coffee     rsstodolist.coffee sensitive.coffee   yelp.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ddel aws.coffee[1m [0m[0m [?1l>
-]2;rmtrash aws.coffee]1;del[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsbang.coffee        botsnack.coffee    default.coffee     rsstodolist.coffee sensitive.coffee   yelp.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ddel bang.coffee[1m [0m[0m [?1l>
-]2;rmtrash bang.coffee]1;del[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ddel botsnack.coffee[1m [0m[0m [?1l>
-]2;rmtrash botsnack.coffee]1;del[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/scripts]1;..hubot/scripts[0m[27m[24m[J[01;32m➜ [01;32m [36mscripts [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ddel r    d ...[?1l>
-]2;..]1;..[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=...  lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vvim   vvim hubot-scripts.json[1m [0m[0m [?1l>
-]2;vim hubot-scripts.json]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"hubot-scripts.json" 5L, 58C[>c[1;1H[106m[[m
-"redis-brain.coffee",
-"shipit.coffee",
-"aws.coffee"
-[106m][m
-[94m~                                                                                                                                                                                                                                                                             [7;1H~                                                                                                                                                                                                                                                                             [8;1H~                                                                                                                                                                                                                                                                             [9;1H~                                                                                                                                                                                                                                                                             [10;1H~                                                                                                                                                                                                                                                                             [11;1H~                                                                                                                                                                                                                                                                             [12;1H~                                                                                                                                                                                                                                                                             [13;1H~                                                                                                                                                                                                                                                                             [14;1H~                                                                                                                                                                                                                                                                             [15;1H~                                                                                                                                                                                                                                                                             [16;1H~                                                                                                                                                                                                                                                                             [17;1H~                                                                                                                                                                                                                                                                             [18;1H~                                                                                                                                                                                                                                                                             [19;1H~                                                                                                                                                                                                                                                                             [20;1H~                                                                                                                                                                                                                                                                             [21;1H~                                                                                                                                                                                                                                                                             [22;1H~                                                                                                                                                                                                                                                                             [23;1H~                                                                                                                                                                                                                                                                             [24;1H~                                                                                                                                                                                                                                                                             [25;1H~                                                                                                                                                                                                                                                                             [26;1H~                                                                                                                                                                                                                                                                             [27;1H~                                                                                                                                                                                                                                                                             [28;1H~                                                                                                                                                                                                                                                                             [29;1H~                                                                                                                                                                                                                                                                             [30;1H~                                                                                                                                                                                                                                                                             [31;1H~                                                                                                                                                                                                                                                                             [32;1H~                                                                                                                                                                                                                                                                             [33;1H~                                                                                                                                                                                                                                                                             [34;1H~                                                                                                                                                                                                                                                                             [35;1H~                                                                                                                                                                                                                                                                             [36;1H~                                                                                                                                                                                                                                                                             [37;1H~                                                                                                                                                                                                                                                                             [38;1H~                                                                                                                                                                                                                                                                             [39;1H~                                                                                                                                                                                                                                                                             [40;1H~                                                                                                                                                                                                                                                                             [41;1H~                                                                                                                                                                                                                                                                             [42;1H~                                                                                                                                                                                                                                                                             [43;1H~                                                                                                                                                                                                                                                                             [44;1H~                                                                                                                                                                                                                                                                             [45;1H~                                                                                                                                                                                                                                                                             [46;1H~                                                                                                                                                                                                                                                                             [47;1H~                                                                                                                                                                                                                                                                             [48;1H~                                                                                                                                                                                                                                                                             [49;1H~                                                                                                                                                                                                                                                                             [50;1H~                                                                                                                                                                                                                                                                             [51;1H~                                                                                                                                                                                                                                                                             [52;1H~                                                                                                                                                                                                                                                                             [53;1H~                                                                                                                                                                                                                                                                             [54;1H~                                                                                                                                                                                                                                                                             [55;1H~                                                                                                                                                                                                                                                                             [56;1H~                                                                                                                                                                                                                                                                             [57;1H~                                                                                                                                                                                                                                                                             [58;1H~                                                                                                                                                                                                                                                                             [1;1H[?12l[?25h[?25l[m[[5;1H][2;1H[?12l[?25h
-
-[?25l[1;1H[106m[[5;1H][?12l[?25h[?25l[m[59;1H[1m-- INSERT --[m[59;13H[K[5;2H[?12l[?25h[?25l[?12l[?25h[?25l[5;1H[K[6;1H[106m][m[6;2H[K[6;1H[?12l[?25h[?25l[1;1H[[6;1H][5;1H[?12l[?25h[4;1H
-[?25l"[?12l[?25h[?25l"w[?12l[?25h[?25lwo[?12l[?25h[?25lol[?12l[?25h[?25llf[?12l[?25h[?25lfr[?12l[?25h[?25lra[?12l[?25h[?25lam[?12l[?25h[?25lm.[?12l[?25h[?25l.c[?12l[?25h[?25lco[?12l[?25h[?25lof[?12l[?25h[?25lff[?12l[?25h[?25lfe[?12l[?25h[?25lee[?12l[?25h[?25le"[?12l[?25h[4;13H[?25l",[?12l[?25h[59;1H[K[4;13H[?25l[?12l[?25h[?25l[59;1H:[?12l[?25hwq[?25l"hubot-scripts.json" 6L, 76C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vim hubot-scripts.json[?1l>
-]2;vim hubot-scripts.json]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"hubot-scripts.json" 6L, 76C[>c[1;1H[106m[[m
-"redis-brain.coffee",
-"shipit.coffee",
-"aws.coffee",
-"wolfram.coffee"
-[106m][m
-[94m~                                                                                                                                                                                                                                                                             [8;1H~                                                                                                                                                                                                                                                                             [9;1H~                                                                                                                                                                                                                                                                             [10;1H~                                                                                                                                                                                                                                                                             [11;1H~                                                                                                                                                                                                                                                                             [12;1H~                                                                                                                                                                                                                                                                             [13;1H~                                                                                                                                                                                                                                                                             [14;1H~                                                                                                                                                                                                                                                                             [15;1H~                                                                                                                                                                                                                                                                             [16;1H~                                                                                                                                                                                                                                                                             [17;1H~                                                                                                                                                                                                                                                                             [18;1H~                                                                                                                                                                                                                                                                             [19;1H~                                                                                                                                                                                                                                                                             [20;1H~                                                                                                                                                                                                                                                                             [21;1H~                                                                                                                                                                                                                                                                             [22;1H~                                                                                                                                                                                                                                                                             [23;1H~                                                                                                                                                                                                                                                                             [24;1H~                                                                                                                                                                                                                                                                             [25;1H~                                                                                                                                                                                                                                                                             [26;1H~                                                                                                                                                                                                                                                                             [27;1H~                                                                                                                                                                                                                                                                             [28;1H~                                                                                                                                                                                                                                                                             [29;1H~                                                                                                                                                                                                                                                                             [30;1H~                                                                                                                                                                                                                                                                             [31;1H~                                                                                                                                                                                                                                                                             [32;1H~                                                                                                                                                                                                                                                                             [33;1H~                                                                                                                                                                                                                                                                             [34;1H~                                                                                                                                                                                                                                                                             [35;1H~                                                                                                                                                                                                                                                                             [36;1H~                                                                                                                                                                                                                                                                             [37;1H~                                                                                                                                                                                                                                                                             [38;1H~                                                                                                                                                                                                                                                                             [39;1H~                                                                                                                                                                                                                                                                             [40;1H~                                                                                                                                                                                                                                                                             [41;1H~                                                                                                                                                                                                                                                                             [42;1H~                                                                                                                                                                                                                                                                             [43;1H~                                                                                                                                                                                                                                                                             [44;1H~                                                                                                                                                                                                                                                                             [45;1H~                                                                                                                                                                                                                                                                             [46;1H~                                                                                                                                                                                                                                                                             [47;1H~                                                                                                                                                                                                                                                                             [48;1H~                                                                                                                                                                                                                                                                             [49;1H~                                                                                                                                                                                                                                                                             [50;1H~                                                                                                                                                                                                                                                                             [51;1H~                                                                                                                                                                                                                                                                             [52;1H~                                                                                                                                                                                                                                                                             [53;1H~                                                                                                                                                                                                                                                                             [54;1H~                                                                                                                                                                                                                                                                             [55;1H~                                                                                                                                                                                                                                                                             [56;1H~                                                                                                                                                                                                                                                                             [57;1H~                                                                                                                                                                                                                                                                             [58;1H~                                                                                                                                                                                                                                                                             [1;1H[?12l[?25h[?25l[m[[6;1H][2;1H[?12l[?25h
-
-
-[?25l[1;1H[106m[[5;58r[m[58;1H
-[1;59r[5;1H[106m][m[58;1H[94m~                                                                                                                                                                                                                                                                             [m[59;1H[K[5;1H[?12l[?25h[?25l[59;1H:[?12l[?25hwq[?25l"hubot-scripts.json" 5L, 59C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls scripts[1m/[0m[0m [?1l>
-]2;ls -G scripts]1;lsdefault.coffee     rsstodolist.coffee sensitive.coffee   wolfram.coffee     yelp.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=nnpm   nnpm install --[10D          [10D   lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=nnpm   ccd node_modules[1m/[0m[0m [?1l>
-]2;cd node_modules]1;cd[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules]1;../node_modules[0m[27m[24m[J[01;32m➜ [01;32m [36mnode_modules [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;ls[1m[36maws2js[39;49m[0m                 [1m[36mexpress[39;49m[0m                [1m[36mhubot-ector[39;49m[0m            [1m[36mhubot-help[39;49m[0m             [1m[36mhubot-pugme[39;49m[0m            [1m[36mhubot-slack[39;49m[0m            [1m[36mpg[39;49m[0m                     [1m[36mwolfram-alpha[39;49m[0m
-[1m[36mbang[39;49m[0m                   [1m[36mhubot[39;49m[0m                  [1m[36mhubot-google-images[39;49m[0m    [1m[36mhubot-heroku-keepalive[39;49m[0m [1m[36mhubot-redis-brain[39;49m[0m      [1m[36mjsdom[39;49m[0m                  [1m[36mshellwords[39;49m[0m             [1m[36myelp[39;49m[0m
-[1m[36mejs[39;49m[0m                    [1m[36mhubot-diagnostics[39;49m[0m      [1m[36mhubot-google-translate[39;49m[0m [1m[36mhubot-maps[39;49m[0m             [1m[36mhubot-scripts[39;49m[0m          [1m[36mmoment[39;49m[0m                 [1m[36munderscore[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules]1;../node_modules[0m[27m[24m[J[01;32m➜ [01;32m [36mnode_modules [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=...[?1l>
-]2;..]1;..[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=nnpm install --save wolfram[?1l>
-]2;npm install --save wolfram]1;npm
-> libxmljs@0.14.3 install /Users/syc/Code/hubot/node_modules/wolfram/node_modules/libxmljs
-> node-gyp rebuild
-
-  CC(target) Release/obj.target/libxml/vendor/libxml/buf.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/catalog.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/chvalid.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/dict.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/encoding.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/entities.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/error.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/globals.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/hash.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/HTMLparser.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/HTMLtree.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/legacy.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/list.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/parser.o
-[1m../vendor/libxml/parser.c:13492:43: [0m[0;1;35mwarning: [0m[1mpassing 'const xmlChar *' (aka 'const unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign][0m
-        hdlr = xmlFindCharEncodingHandler(doc->encoding);
-[0;1;32m                                          ^~~~~~~~~~~~~
-[0m[1m../vendor/libxml/include/libxml/encoding.h:175:42: [0m[0;1;30mnote: [0mpassing argument to parameter 'name' here[0m
-        xmlFindCharEncodingHandler      (const char *name);
-[0;1;32m                                                     ^
-[0m1 warning generated.
-  CC(target) Release/obj.target/libxml/vendor/libxml/parserInternals.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/pattern.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/relaxng.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/SAX2.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/SAX.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/tree.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/threads.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/uri.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/valid.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xinclude.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xlink.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlIO.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlmemory.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlmodule.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlreader.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlregexp.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlsave.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlschemas.o
-[1m../vendor/libxml/xmlschemas.c:24203:10: [0m[0;1;35mwarning: [0m[1mexplicitly assigning value of variable of type 'xmlSchemaValType' to itself [-Wself-assign][0m
-        valType = valType;
-[0;1;32m        ~~~~~~~ ^ ~~~~~~~
-[0m1 warning generated.
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlschemastypes.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlstring.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlunicode.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xmlwriter.o
-  CC(target) Release/obj.target/libxml/vendor/libxml/xpath.o
-[1m../vendor/libxml/xpath.c:12402:13: [0m[0;1;35mwarning: [0m[1mcomparison of constant 'XML_NAMESPACE_DECL' (18) with expression of type 'xmlXPathTypeVal' is always false [-Wtautological-constant-out-of-range-compare][0m
-                        if (type == XML_NAMESPACE_DECL)
-[0;1;32m                            ~~~~ ^  ~~~~~~~~~~~~~~~~~~
-[0mIn file included from ../vendor/libxml/xpath.c:185:
-[1m../vendor/libxml/trionan.c:194:1: [0m[0;1;35mwarning: [0m[1munused function 'trio_is_special_quantity' [-Wunused-function][0m
-trio_is_special_quantity
-[0;1;32m^
-[0m[1m../vendor/libxml/trionan.c:218:1: [0m[0;1;35mwarning: [0m[1munused function 'trio_is_negative' [-Wunused-function][0m
-trio_is_negative
-[0;1;32m^
-[0m3 warnings generated.
-  CC(target) Release/obj.target/libxml/vendor/libxml/xpointer.o
-  LIBTOOL-STATIC Release/xml.a
-  CXX(target) Release/obj.target/xmljs/src/libxmljs.o
-  CXX(target) Release/obj.target/xmljs/src/xml_attribute.o
-  CXX(target) Release/obj.target/xmljs/src/xml_document.o
-  CXX(target) Release/obj.target/xmljs/src/xml_element.o
-  CXX(target) Release/obj.target/xmljs/src/xml_comment.o
-  CXX(target) Release/obj.target/xmljs/src/xml_namespace.o
-  CXX(target) Release/obj.target/xmljs/src/xml_node.o
-  CXX(target) Release/obj.target/xmljs/src/xml_sax_parser.o
-  CXX(target) Release/obj.target/xmljs/src/xml_syntax_error.o
-  CXX(target) Release/obj.target/xmljs/src/xml_xpath_context.o
-  SOLINK(target) Release/xmljs.node
-  SOLINK(target) Release/xmljs.node: Finished
-wolfram@0.3.2 node_modules/wolfram
-├── request@2.1.1
-└── libxmljs@0.14.3 (bindings@1.2.1, nan@2.0.7)
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ggrep -rl "catchall" .[?1l>
-]2;grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} -rl "catchall" .]1;grep./node_modules/hubot-ector/src/ector.coffee
-./node_modules/jsdom/node_modules/acorn/test/jquery-string.js
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=grep -rl "catchall" .[1C[P[13C [14D[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C!" .[?1l>
-[0m[27m[24m[Jdquote> [K[?1h=
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;31m➜ [27m[01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=grep -r "catchall ." .[?1l>
-]2;grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} -r "catchall" .]1;grep./node_modules/hubot-ector/src/ector.coffee:    console.log '[01;31m[Kcatchall[m[K!'
-./node_modules/jsdom/node_modules/acorn/test/jquery-string.js:\t * 4) the [01;31m[Kcatchall[m[K symbol \"*\" can be used\n\
-./node_modules/jsdom/node_modules/acorn/test/jquery-string.js:\t * 2) the [01;31m[Kcatchall[m[K symbol \"*\" can be used\n\
-./node_modules/jsdom/node_modules/acorn/test/jquery-string.js:\t\t// Keys separate source (or [01;31m[Kcatchall[m[K \"*\") and destination types with a single space\n\
-./typescript:[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ggrep -rl "[01;31m[Kcatchall[m[K" .[?1l>
-./typescript:]2;grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} -rl "[01;31m[Kcatchall[m[K" .]1;grep./node_modules/hubot-ector/src/ector.coffee
-./typescript:[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=grep -rl "[01;31m[Kcatchall[m[K" .[1C[P[13C [14D[1C[1C[1C[1C[1C[1C[1C[1C[1C[1C!" .[?1l>
-./typescript:[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;31m➜ [27m[01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=grep -r "[01;31m[Kcatchall[m[K ." .[?1l>
-./typescript:]2;grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn} -r "[01;31m[Kcatchall[m[K" .]1;grep./node_modules/hubot-ector/src/ector.coffee:    console.log '[01;31m[K[01;31m[Kcatchall[m[K[m[K!'
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsProcfile              README.md             [1m[36mbin[39;49m[0m                   external-scripts.json hubot-scripts.json    index.js              [1m[36mnode_modules[39;49m[0m          package.json          [1m[36mscripts[39;49m[0m               typescript            [1m[36mviews[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot]1;~/Code/hubot[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ccd   ccd  ...[?1l>
-]2;..]1;..[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code]1;~/Code[0m[27m[24m[J[01;32m➜ [01;32m [36mCode [01;34m[01;34m [00m[K[?1h=ccd hubot[1m/[0m[0m/node_modules[1m/[0m[0m [?1l>
-]2;cd hubot/node_modules]1;cd[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules]1;../node_modules[0m[27m[24m[J[01;32m➜ [01;32m [36mnode_modules [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ccd hubot-ector[1m/[0m[0m [?1l>
-]2;cd hubot-ector]1;cd[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector]1;..s/hubot-ector[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot-ector [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lsLICENSE      README.md    index.coffee [1m[36mnode_modules[39;49m[0m package.json [1m[36mscript[39;49m[0m       [1m[36msrc[39;49m[0m          [1m[36mtest[39;49m[0m
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector]1;..s/hubot-ector[0m[27m[24m[J[01;32m➜ [01;32m [36mhubot-ector [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=ccd src[1m/[0m[0m [?1l>
-]2;cd src]1;cd[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vvim ector.coffee[1m [0m[0m [?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 63L, 1629C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[49;6H if err[50;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[51;6H else[52;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[57;6H text = msg.message.text[58;6H ector.setUser msg.message.user.name[1;1H[?12l[?25h[?25l[59;1H[K[59;1H/[?12l[?25hcatchall[?25l[55;18H[?12l[?25h[56;16H[57;18H[58;18H[?25l[1;58r[58;1H
-[1;59r[58;6H ector.addEntry text[59;1H[K[58;18H[?12l[?25h[?25l[1;58r[58;1H
-[1;59r[58;6H ector.linkNodesToLastSentence previousResponseNodes[58;18H[?12l[?25h[?25l[1;58r[58;1H
-[1;59r[58;6H response = ector.generateResponse()[58;18H[?12l[?25h[?25l[1;58r[58;1H
-[1;59r[58;6H previousResponseNodes = response.nodes[58;18H[?12l[?25h[?25l[1;58r[58;1H
-[1;59r[58;6H msg.reply response.sentence[58;18H[?12l[?25h[57;18H[56;18H[55;18H[54;18H[53;18H[52;18H[51;16H[?25l[59;1H:[?12l[?25hwq[?25l"ector.coffee" 63L, 1629C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lscn.json      ector.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lscn.json      ector.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lscn.json      ector.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vvim cn.json[1m [0m[0m [?1l>
-]2;vim cn.json]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"cn.json" [noeol] 1L, 416C[>c[1;1H[106m{[m"node":{"1":{"id":1,"label":"spew hello","occ":1},"2":{"id":2,"label":"wpew","occ":1,"beg":1},"3":{"id":3,"label":"whello","occ":1,"end":1}},"link":{"1_2":{"fromId":1,"toId":2,"coOcc":1},"1_3":{"fromId":1,"toId":3,"coOcc":1},"2_3":{"fromId":2,"toId":3,"coOcc":1}},"nodee[2;1HLastId":3,"labelIndex":{"spew hello":1,"wpew":2,"whello":3},"fromIndex":{"1":["1_2","1_3"],"2":["2_3"]},"toIndex":{"2":["1_2"],"3":["1_3","2_3"]}[106m}[m
-[94m~                                                                                                                                                                                                                                                                             [4;1H~                                                                                                                                                                                                                                                                             [5;1H~                                                                                                                                                                                                                                                                             [6;1H~                                                                                                                                                                                                                                                                             [7;1H~                                                                                                                                                                                                                                                                             [8;1H~                                                                                                                                                                                                                                                                             [9;1H~                                                                                                                                                                                                                                                                             [10;1H~                                                                                                                                                                                                                                                                             [11;1H~                                                                                                                                                                                                                                                                             [12;1H~                                                                                                                                                                                                                                                                             [13;1H~                                                                                                                                                                                                                                                                             [14;1H~                                                                                                                                                                                                                                                                             [15;1H~                                                                                                                                                                                                                                                                             [16;1H~                                                                                                                                                                                                                                                                             [17;1H~                                                                                                                                                                                                                                                                             [18;1H~                                                                                                                                                                                                                                                                             [19;1H~                                                                                                                                                                                                                                                                             [20;1H~                                                                                                                                                                                                                                                                             [21;1H~                                                                                                                                                                                                                                                                             [22;1H~                                                                                                                                                                                                                                                                             [23;1H~                                                                                                                                                                                                                                                                             [24;1H~                                                                                                                                                                                                                                                                             [25;1H~                                                                                                                                                                                                                                                                             [26;1H~                                                                                                                                                                                                                                                                             [27;1H~                                                                                                                                                                                                                                                                             [28;1H~                                                                                                                                                                                                                                                                             [29;1H~                                                                                                                                                                                                                                                                             [30;1H~                                                                                                                                                                                                                                                                             [31;1H~                                                                                                                                                                                                                                                                             [32;1H~                                                                                                                                                                                                                                                                             [33;1H~                                                                                                                                                                                                                                                                             [34;1H~                                                                                                                                                                                                                                                                             [35;1H~                                                                                                                                                                                                                                                                             [36;1H~                                                                                                                                                                                                                                                                             [37;1H~                                                                                                                                                                                                                                                                             [38;1H~                                                                                                                                                                                                                                                                             [39;1H~                                                                                                                                                                                                                                                                             [40;1H~                                                                                                                                                                                                                                                                             [41;1H~                                                                                                                                                                                                                                                                             [42;1H~                                                                                                                                                                                                                                                                             [43;1H~                                                                                                                                                                                                                                                                             [44;1H~                                                                                                                                                                                                                                                                             [45;1H~                                                                                                                                                                                                                                                                             [46;1H~                                                                                                                                                                                                                                                                             [47;1H~                                                                                                                                                                                                                                                                             [48;1H~                                                                                                                                                                                                                                                                             [49;1H~                                                                                                                                                                                                                                                                             [50;1H~                                                                                                                                                                                                                                                                             [51;1H~                                                                                                                                                                                                                                                                             [52;1H~                                                                                                                                                                                                                                                                             [53;1H~                                                                                                                                                                                                                                                                             [54;1H~                                                                                                                                                                                                                                                                             [55;1H~                                                                                                                                                                                                                                                                             [56;1H~                                                                                                                                                                                                                                                                             [57;1H~                                                                                                                                                                                                                                                                             [58;1H~                                                                                                                                                                                                                                                                             [1;1H[?12l[?25h[?25l[m[59;1H[K[59;1H:[?12l[?25hq[?25l[59;2H[K[59;2H[?12l[?25hwq[?25l"cn.json" 1L, 417C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls[?1l>
-]2;ls -G]1;lscn.json      ector.coffee
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=lls  vvim ector.coffee[1m [0m[0m [?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 63L, 1629C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[49;6H if err[50;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[51;6H else[52;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[57;6H text = msg.message.text[58;6H ector.setUser msg.message.user.name[1;1H[?12l[?25h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[?25l[59;1H[1m-- INSERT --[m[59;13H[K[20;1H[?12l[?25h[?25l[21;58r[21;1H[L[1;59r[21;1H[?12l[?25h[?25ld[?12l[?25h[?25ldi[?12l[?25h[?25lir[?12l[?25h[?25lrn[?12l[?25h[?25lna[?12l[?25h[?25lam[?12l[?25h[?25lme[?12l[?25h[?25l [?12l[?25h[?25l =[?12l[?25h[?25l [?12l[?25h[?25l _[?12l[?25h[?25l__[?12l[?25h[?25l_d[?12l[?25h[?25ldi[?12l[?25h[?25lir[?12l[?25h[?25lrn[?12l[?25h[?25lna[?12l[?25h[?25lam[?12l[?25h[?25lme[?12l[?25h[?25le.[?12l[?25h[?25l.s[?12l[?25h[?25lsp[?12l[?25h[?25lpl[?12l[?25h[?25lli[?12l[?25h[?25lit[?12l[?25h[?25lt)[?12l[?25h[?25l)'[?12l[?25h[?25l[21;27H[K[21;27H[?12l[?25h[?25l[21;26H[K[21;26H[?12l[?25h[?25lt([?12l[?25h[?25l('[?12l[?25h[?25l'/[?12l[?25h[?25l[31m'/'[?12l[?25h[?25l'[m)[106m([3C)[?12l[?25h[m[59;1H[K[21;30H[?25l[?12l[?25h[?25l[59;1H:[?12l[?25hwq[?25l"ector.coffee" 64L, 1660C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vim ector.coffee[?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 64L, 1660C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-dirname = __dirname.split([31m'/'[m)
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[50;6H if err[51;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[52;6H else[53;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[58;6H text = msg.message.text[1;1H[?12l[?25h
-
-
-
-
-
-
-
-
-
-
-[?25l[59;1H[K[59;1H:[?12l[?25hwq[?25l"ector.coffee" 64L, 1660C written
-[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=nnode[?1l>
-]2;node]1;node[1G[0J> [3G__dirname
-ReferenceError: __dirname is not defined
-    at repl:1:2
-    at REPLServer.self.eval (repl.js:110:21)
-    at Interface.<anonymous> (repl.js:239:12)
-    at Interface.emit (events.js:95:17)
-    at Interface._onLine (readline.js:203:10)
-    at Interface._line (readline.js:532:8)
-    at Interface._ttyWrite (readline.js:761:14)
-    at ReadStream.onkeypress (readline.js:100:10)
-    at ReadStream.emit (events.js:98:17)
-    at emitKey (readline.js:1096:12)
-[1G[0J> [3G:q[1G[0J> :[4G[1G[0J> [3G[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vvim ector.coffee[1m [0m[0m [?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 64L, 1660C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-dirname = __dirname.split([31m'/'[m)
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[50;6H if err[51;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[52;6H else[53;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[58;6H text = msg.message.text[1;1H[?12l[?25h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[?25l[16;58r[58;1H
-[1;59r[58;6H ector.setUser msg.message.user.name[59;1H[K[16;1H[?12l[?25h[15;1H[14;1H[?25l[59;1H1 more line; before #1  4 seconds ago[16;58r[16;1H[L[1;59r[16;1H[34m#   None[m[59;1H[K[16;1H[?12l[?25h[?25l[59;1HAlready at oldest change[16;1H[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[15;1H[?25l[15;58r[58;1H
-[1;59r[58;6H ector.setUser msg.message.user.name[59;1H[K[15;1H[?12l[?25h[?25l[59;1H1 more line; before #2  2 seconds ago[15;58r[15;1H[L[1;59r[15;1H[34m# Notes:[m[59;1H[K[15;1H[?12l[?25h[14;1H[13;1H[12;1H[11;1H[10;1H[?25l[59;1HAlready at oldest change[10;1H[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[59;1H[K[59;1H:[?12l[?25hq![?25l[59;1H[K[59;1H[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vvim ector.coffee[?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 64L, 1660C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-dirname = __dirname.split([31m'/'[m)
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[50;6H if err[51;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[52;6H else[53;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[58;6H text = msg.message.text[1;1H[?12l[?25h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[16;1H[?25l[16;58r[58;1H
-[1;59r[58;6H ector.setUser msg.message.user.name[59;1H[K[16;1H[?12l[?25h[?25l[59;1H:[?12l[?25hq![?25l[59;1H[K[59;1H[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=vim ector.coffee[?1l>
-]2;vim ector.coffee]1;vim[?1049h[?1h=[1;59r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[59;1H"ector.coffee" 64L, 1660C[>c[1;1H[34m# Description:
-#   Make hubot learn and reply, when no other script is triggered.
-#
-# Dependencies:
-#   "ector": "^0.1.6"
-#
-# Configuration:
-#   None
-#
-# Commands:
-#   sentence not triggering any other command - Makes hubot reply (see "shut up" and "speak").
-#   hubot shut up - Make hubot quiet.
-#   hubot speak - Make hubot speak again.
-#
-# Notes:
-#   None
-#
-# Author:
-#   parmentf[m
-
-dirname = __dirname.split([31m'/'[m)
-util = require [31m'util'[m
-Ector = require [31m'ector'[m
-FileConceptNetwork =  require([31m'file-concept-network'[m).FileConceptNetwork
-
-file_backup = __dirname + [31m"/cn.json"[m
-ector = new Ector()
-ector.injectConceptNetwork FileConceptNetwork
-ector.cn.load file_backup, (err) ->
-  if err
-    console.error [31m'Error while loading cn.json\n%s'[m, err
-previousResponseNodes = null
-quiet = false
-speakReplies =
-  [ [31m'Thanks.'[m, [31m'OK'[m, [31m'As you will.'[m, [31m'Glad to be here again :)'[m, [31m':)'[m, [31m'Thank you.'[m]
-
-module.exports = (robot) ->
-
-  ector.setName robot.name
-
-  robot.respond /shut up/i, (msg) ->
-    quiet = true
-
-  robot.respond /speak/i, (msg) ->
-    quiet = false
-    msg.reply msg.random speakReplies
-
-  robot.respond /save yourself/i, (msg) ->
-    ector.cn.save file_backup, (err) ->[50;6H if err[51;8H msg.reply [31m"An error occurred while saving cn.json:"[m, err[52;6H else[53;8H msg.reply [31m"Thanks, My mind is safe now!"[m
-
-  robot.catchAll (msg) ->
-    console.log [31m'catchall!'[m
-    if not quiet[58;6H text = msg.message.text[1;1H[?12l[?25h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[?25l[59;1H[K[59;1H:[?12l[?25hq![?25l[59;1H[K[59;1H[?1l>[?12l[?25h[?1049l[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=d ssbl   ssubl ector.coffee[1m [0m[0m [?1l>
-]2;subl ector.coffee]1;subl[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=nnode e     ccoffee[1m [0m[0m c ector.coffee[1m [0m[0m [?1l>
-]2;coffee ector.coffee]1;coffee,Users,syc
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=coffee ector.coffee[?1l>
-]2;coffee ector.coffee]1;coffee/Users/syc/Code/hubot
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=coffee ector.coffee[?1l>
-]2;coffee ector.coffee]1;coffee/Users/syc/Code/hubot/cn.json
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                                                              ]2;syc@Macbook-SYC: ~/Code/hubot/node_modules/hubot-ector/src]1;..bot-ector/src[0m[27m[24m[J[01;32m➜ [01;32m [36msrc [01;34mgit:([31mmaster[34m) [33m✗[00m[00m[01;34m [00m[K[?1h=

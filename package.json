@@ -14,7 +14,7 @@
     "express": "^4.13.3",
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
-    "hubot-ector": "^1.2.1",
+    "hubot-ector": "https://github.com/sycurfriend00/hubot-ector.git",
     "hubot-google-images": "^0.2.1",
     "hubot-google-translate": "^0.2.0",
     "hubot-help": "^0.1.1",
@@ -30,7 +30,6 @@
     "shellwords": "^0.1.0",
     "underscore": "^1.8.3",
     "wolfram": "^0.3.2",
-    "wolfram-alpha": "^0.2.1",
     "yelp": "^0.2.0"
   },
   "engines": {
