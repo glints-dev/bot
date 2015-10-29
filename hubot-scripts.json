@@ -1,1 +1,7 @@
-[]
+[
+"redis-brain.coffee", 
+"shipit.coffee", 
+"aws.coffee",
+"wolfram.coffee",
+"abstract.coffee"
+]

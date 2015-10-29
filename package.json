@@ -4,8 +4,8 @@
   "private": true,
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
-  "scripts" : {
-	"start": "node index.js"
+  "scripts": {
+    "start": "node index.js"
   },
   "dependencies": {
     "aws2js": "^0.8.3",
@@ -13,9 +13,8 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "hubot": "^2.16.0",
-    "hubot-9gag": "^0.2.0",
-    "hubot-ambush": "0.0.3",
     "hubot-diagnostics": "0.0.1",
+    "hubot-ector": "^1.2.1",
     "hubot-google-images": "^0.2.1",
     "hubot-google-translate": "^0.2.0",
     "hubot-help": "^0.1.1",
@@ -23,14 +22,15 @@
     "hubot-maps": "0.0.2",
     "hubot-pugme": "^0.1.0",
     "hubot-redis-brain": "0.0.3",
-    "hubot-rules": "^0.1.1",
     "hubot-scripts": "^2.16.2",
-    "hubot-shipit": "^0.2.0",
     "hubot-slack": "^3.3.0",
     "jsdom": "^3.1.2",
     "moment": "^2.10.6",
+    "pg": "^4.4.3",
     "shellwords": "^0.1.0",
     "underscore": "^1.8.3",
+    "wolfram": "^0.3.2",
+    "wolfram-alpha": "^0.2.1",
     "yelp": "^0.2.0"
   },
   "engines": {
