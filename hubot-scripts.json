@@ -2,5 +2,6 @@
 "redis-brain.coffee", 
 "shipit.coffee", 
 "aws.coffee",
-"wolfram.coffee"
+"wolfram.coffee",
+"stranger.coffee"
 ]
