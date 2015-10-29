@@ -10,8 +10,6 @@
   "dependencies": {
     "aws2js": "^0.8.3",
     "bang": "^1.0.4",
-    "ejs": "^2.3.4",
-    "express": "^4.13.3",
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-ector": "https://github.com/sycurfriend00/hubot-ector.git",
@@ -27,7 +25,6 @@
     "jsdom": "^3.1.2",
     "moment": "^2.10.6",
     "pg": "^4.4.3",
-    "shellwords": "^0.1.0",
     "underscore": "^1.8.3",
     "wolfram": "^0.3.2",
     "yelp": "^0.2.0"
