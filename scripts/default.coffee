@@ -204,7 +204,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'clarechai']
+  authorized = ['yingcong', 'clarechai', 'qinen']
   password = process.env.HUBOT_NINJA_PASSWORD
   password = new RegExp /dresden/
 
