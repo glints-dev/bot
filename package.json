@@ -4,6 +4,9 @@
   "private": true,
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
+  "engines": {
+    "npm": "3.3.9"
+  },
   "scripts": {
     "start": "node index.js"
   },
