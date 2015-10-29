@@ -1,0 +1,38 @@
+{
+  "name": "jarvis",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Ying Cong <yingcong@glints.com>",
+  "description": "Just A Rather Very Intelligent System",
+  "engines": {
+    "npm": "3.3.9"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "aws2js": "^0.8.3",
+    "bang": "^1.0.4",
+    "hubot": "^2.16.0",
+    "hubot-diagnostics": "0.0.1",
+    "hubot-ector": "https://github.com/sycurfriend00/hubot-ector/tarball/master",
+    "hubot-google-images": "^0.2.1",
+    "hubot-google-translate": "^0.2.0",
+    "hubot-help": "^0.1.1",
+    "hubot-heroku-keepalive": "^1.0.0",
+    "hubot-maps": "0.0.2",
+    "hubot-pugme": "^0.1.0",
+    "hubot-redis-brain": "0.0.3",
+    "hubot-scripts": "^2.16.2",
+    "hubot-slack": "^3.3.0",
+    "jsdom": "^3.1.2",
+    "moment": "^2.10.6",
+    "pg": "^4.4.3",
+    "underscore": "^1.8.3",
+    "wolfram": "^0.3.2",
+    "yelp": "^0.2.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
