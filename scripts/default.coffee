@@ -206,7 +206,7 @@ module.exports = (robot) ->
   authenticated = false
   authorized = ['yingcong', 'clarechai', 'qinen']
   password = process.env.HUBOT_NINJA_PASSWORD
-  password = new RegExp /dresden/
+  password = new RegExp /clarebearcares/
 
   robot.respond /ninja/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
