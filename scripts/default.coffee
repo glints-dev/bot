@@ -21,7 +21,7 @@ module.exports = (robot) ->
 
   ROOM = process.env.HUBOT_STARTUP_ROOM ? 'pleasure-pavilion'
   MESSAGE = process.env.HUBOT_STARTUP_MESSAGE ? 'Hello, cruel world!'
-  robot.messageRoom ROOM, MESSAGE
+  # robot.messageRoom ROOM, MESSAGE
 
   robot.hear /badger/i, (res) ->
     res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
