@@ -26,6 +26,7 @@
     "hubot-scripts": "^2.16.2",
     "hubot-slack": "^3.3.0",
     "hubot-uber": "^1.0.1",
+    "hubot-youtube": "^1.0.1",
     "jsdom": "^3.1.2",
     "moment": "^2.10.6",
     "pg": "^4.4.3",

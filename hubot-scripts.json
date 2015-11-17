@@ -3,5 +3,7 @@
 "shipit.coffee", 
 "aws.coffee",
 "wolfram.coffee",
-"stranger.coffee"
+"stranger.coffee",
+"youtube-info.coffee",
+"birthday.coffee"
 ]
