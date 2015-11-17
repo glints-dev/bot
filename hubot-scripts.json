@@ -4,6 +4,8 @@
 "aws.coffee",
 "wolfram.coffee",
 "stranger.coffee",
-"youtube-info.coffee",
-"birthday.coffee"
+"birthday.coffee",
+"url.coffee",
+"webshot.coffee",
+"webcam.coffee"
 ]
