@@ -5,7 +5,7 @@
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
   "engines": {
-    "npm": "3.3.9"
+    "node": "0.10.x"
   },
   "scripts": {
     "start": "node index.js"
@@ -25,14 +25,12 @@
     "hubot-redis-brain": "0.0.3",
     "hubot-scripts": "^2.16.2",
     "hubot-slack": "^3.3.0",
+    "hubot-uber": "^1.0.1",
     "jsdom": "^3.1.2",
     "moment": "^2.10.6",
     "pg": "^4.4.3",
     "underscore": "^1.8.3",
     "wolfram": "^0.3.2",
     "yelp": "^0.2.0"
-  },
-  "engines": {
-    "node": "0.10.x"
   }
 }
