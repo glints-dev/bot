@@ -120,14 +120,14 @@ module.exports = (robot) ->
     robot.brain.set 'totalSodas', 0
     res.reply 'zzzzz'
 
-  robot.respond /.*(users|jobs|applications|companies|candidates|summary).*(today|yesterday|this week|last week|this month|last month|total)/i, (res) ->
+  robot.respond /.*(active|users|jobs|applications|companies|candidates|summary).*(today|yesterday|this week|last week|this month|last month|total)/i, (res) ->
     resource = res.match[1].toLowerCase()
     time = res.match[2].toLowerCase()
     if resource != 'summary'
       stats res, resource, time, 'single'
     else
       res.send "Summary for #{time}:"
-      stats res, thing, time, 'summary' for thing in ['users','jobs','applications','companies','candidates']
+      stats res, thing, time, 'summary' for thing in ['users','jobs','applications','companies','candidates', 'active']
 
   stats = (msg, resource, time, mode) ->
     res = resource
@@ -157,50 +157,82 @@ module.exports = (robot) ->
         end = moment().startOf('month')
         startX = moment().startOf('month').subtract(2, 'M')
 
+    if !end
+      end = moment().add(1, 'd')
     dates = [start, end, startX]
 
-    d = d.minute(0).format('MM/DD/YYYY HH:MM') for d in dates when !!d
+    da = (d.hour(0).minute(0).format('MM/DD/YYYY HH:mm') for d in dates when !!d)
 
     where['createdAt'] = {'gt': start} if !!start
     where['createdAt']['lt'] = end if !!end
     where2['createdAt'] = {'gt': startX} if !!startX
     where2['createdAt']['lt'] = start if !!start
 
-    if res == 'candidates' or res == 'companies'
-      switch res
-        when 'candidates'
-          translated = 'candidate'
-        when 'companies'
-          translated = 'company'
+    if res == 'active'
+      resource = 'active users'
+      pg.connect conString, (err, client, done) ->
+        if err
+          return console.error 'Error fetching client from pool', err
 
-      where['preferences'] = {'profileMode': translated }
-      where2['preferences'] = {'profileMode': translated }
-      res = 'users'
+        client.query "SELECT activeusers('#{da[0]}', '#{da[1]}');", (err, result) ->
+          done()
+          if err
+            return console.error 'Error running query', err
+          count = result.rows[0]['activeusers']
 
-    glints_url = 'https://api.glints.com/api/admin/' + res + '?limit=1&where=' + JSON.stringify(where)
-    glints_url2 = 'https://api.glints.com/api/admin/' + res + '?limit=1&where=' + JSON.stringify(where2)
+          client.query "SELECT activeusers('#{da[2]}', '#{da[0]}');", (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
 
-    msg.http(glints_url)
-      .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
-      .get() (err, _, body) ->
-        return res.send "Sorry, the tubes are broken." if err
-        data = JSON.parse(body.toString("utf8"))
-        count = data.count
-        msg.http(glints_url2)
-        .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
-        .get() (err, _, body) ->
-          return res.send "Sorry, the tubes are broken." if err
-          data2 = JSON.parse(body.toString("utf8"))
-          count2 = data2.count
-          diff = count - count2
-          updown = if diff>0 then 'up from' else if diff<0 then 'down from' else 'unchanged from'
-          growth = ((diff/count2) * 100).toFixed(2) + ' %'
-          symbol = if diff>0 then ':thumbsup:' else if diff<0 then ':small_red_triangle_down:' else ':fist:'
-          switch mode
-            when 'single'
-              msg.send "Glints has *#{count}* #{resource} #{time} #{updown} *#{count2}* #{symbol} *#{growth}*"
-            when 'summary'
-              msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
+            count2 = result.rows[0]['activeusers']
+
+            diff = count - count2
+            updown = if diff>0 then 'up from' else if diff<0 then 'down from' else 'unchanged from'
+            growth = ((diff/count2) * 100).toFixed(2) + ' %'
+            symbol = if diff>0 then ':thumbsup:' else if diff<0 then ':small_red_triangle_down:' else ':fist:'
+            
+            switch mode
+              when 'single'
+                msg.send "Glints has *#{count}* #{resource} #{time} #{updown} *#{count2}* #{symbol} *#{growth}*"
+              when 'summary'
+                msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
+    else
+        if res == 'candidates' or res == 'companies'
+          switch res
+            when 'candidates'
+              translated = 'candidate'
+            when 'companies'
+              translated = 'company'
+
+          where['preferences'] = {'profileMode': translated }
+          where2['preferences'] = {'profileMode': translated }
+          res = 'users'
+
+        glints_url = 'https://api.glints.com/api/admin/' + res + '?limit=1&where=' + JSON.stringify(where)
+        glints_url2 = 'https://api.glints.com/api/admin/' + res + '?limit=1&where=' + JSON.stringify(where2)
+
+        msg.http(glints_url)
+          .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
+          .get() (err, _, body) ->
+            return res.send "Sorry, the tubes are broken." if err
+            data = JSON.parse(body.toString("utf8"))
+            count = data.count
+            msg.http(glints_url2)
+            .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
+            .get() (err, _, body) ->
+              return res.send "Sorry, the tubes are broken." if err
+              data2 = JSON.parse(body.toString("utf8"))
+              count2 = data2.count
+              diff = count - count2
+              updown = if diff>0 then 'up from' else if diff<0 then 'down from' else 'unchanged from'
+              growth = ((diff/count2) * 100).toFixed(2) + ' %'
+              symbol = if diff>0 then ':thumbsup:' else if diff<0 then ':small_red_triangle_down:' else ':fist:'
+              switch mode
+                when 'single'
+                  msg.send "Glints has *#{count}* #{resource} #{time} #{updown} *#{count2}* #{symbol} *#{growth}*"
+                when 'summary'
+                  msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
 
   ask = false
   authenticated = false
