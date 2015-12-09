@@ -11,7 +11,9 @@
 #
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 
-conString = process.env.HUBOT_PSQL_STRING
+conString_sg = process.env.HUBOT_PSQL_SG_STRING
+conString_id = process.env.HUBOT_PSQL_ID_STRING
+
 
 glints_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY
 moment = require 'moment'
@@ -164,13 +166,15 @@ module.exports = (robot) ->
     da = (d.hour(0).minute(0).format('MM/DD/YYYY HH:mm') for d in dates when !!d)
 
     where['createdAt'] = {'gt': start} if !!start
+    where['createdAt'] = where['createdAt'] || {}
     where['createdAt']['lt'] = end if !!end
+    where2['createdAt'] = where2['createdAt'] || {}
     where2['createdAt'] = {'gt': startX} if !!startX
     where2['createdAt']['lt'] = start if !!start
 
     if res == 'active'
       resource = 'active users'
-      pg.connect conString, (err, client, done) ->
+      pg.connect conString_sg, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
 
@@ -237,7 +241,6 @@ module.exports = (robot) ->
   ask = false
   authenticated = false
   authorized = ['yingcong', 'clarechai', 'qinen']
-  password = process.env.HUBOT_NINJA_PASSWORD
   password = new RegExp /clarebearcares/
 
   robot.respond /ninja/i, (res) ->
@@ -260,7 +263,7 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`unlock <jobId>` to unlock jobs \n`grant <companyId>` to grant talent search\n`swallow <companyId>` to add to ops@glints.com'
+        res.send '`unlock -(id|sg) <jobId>` to unlock jobs in either indonesia or singapore \n`grant -(id|sg) <companyId>` to grant talent search in either indonesia or singapore\n`swallow -(id|sg) <companyId>` to add to ops@glints.com'
         setTimeout(->
           ask = false
           return
@@ -271,9 +274,19 @@ module.exports = (robot) ->
       res.send 'hahaha!'
 
 
-  robot.respond /unlock\D*(\d+)/i, (res) ->
+  robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
-      jobId = res.match[1]
+      country = res.match[1]
+      jobId = res.match[2]
+      switch country
+        when 'sg'
+          conString = conString_sg
+          domain = 'com'
+        when 'id'
+          conString = conString_id
+          domain = 'id'
+        else 
+          conString = conString_sg
       pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
@@ -305,7 +318,7 @@ module.exports = (robot) ->
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Job unlocked at http://glints.com/dashboard/jobs/#{jobId}"
+                      res.send "Success! Job unlocked at http://glints.' + domain + '/dashboard/jobs/#{jobId}"
                     else
                       res.send "Oops something went wrong!"
           return
@@ -317,7 +330,7 @@ module.exports = (robot) ->
   robot.respond /grant\D*(\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       companyId = res.match[1]
-      pg.connect conString, (err, client, done) ->
+      pg.connect conString_sg, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
@@ -352,7 +365,7 @@ module.exports = (robot) ->
   robot.respond /swallow\D*(\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       companyId = res.match[1]
-      pg.connect conString, (err, client, done) ->
+      pg.connect conString_sg, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
