@@ -318,7 +318,7 @@ module.exports = (robot) ->
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Job unlocked at http://glints.' + domain + '/dashboard/jobs/#{jobId}"
+                      res.send "Success! Job unlocked at http://glints." + domain + "/dashboard/jobs/#{jobId}"
                     else
                       res.send "Oops something went wrong!"
           return
@@ -366,7 +366,7 @@ module.exports = (robot) ->
 
               company2 = result.rows[0]
               if company2 and company2["isVerified"] and company2["PlanId"] == 3
-                res.send "Success! Company granted talent search at http://glints.' + domain + '/dashboard/companies/#{companyId}"
+                res.send "Success! Company granted talent search at http://glints." + domain + "/dashboard/companies/#{companyId}"
           return
         return
     else
@@ -417,7 +417,7 @@ module.exports = (robot) ->
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Company added at http://glints.' + domain + '/dashboard/companies/#{companyId}"
+                      res.send "Success! Company added at http://glints." + domain + "/dashboard/companies/#{companyId}"
                     else
                       res.send "Oops something went wrong!"
           return
