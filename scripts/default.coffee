@@ -327,10 +327,20 @@ module.exports = (robot) ->
       res.send 'Bloody hell, please don\'t push your luck.'
 
 
-  robot.respond /grant\D*(\d+)/i, (res) ->
+  robot.respond /grant\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
-      companyId = res.match[1]
-      pg.connect conString_sg, (err, client, done) ->
+      country = res.match[1]
+      companyId = res.match[2]
+      switch country
+        when 'sg'
+          conString = conString_sg
+          domain = 'com'
+        when 'id'
+          conString = conString_id
+          domain = 'id'
+        else 
+          conString = conString_sg
+      pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
@@ -356,16 +366,28 @@ module.exports = (robot) ->
 
               company2 = result.rows[0]
               if company2 and company2["isVerified"] and company2["PlanId"] == 3
-                res.send "Success! Company granted talent search at http://glints.com/dashboard/companies/#{companyId}"
+                res.send "Success! Company granted talent search at http://glints.' + domain + '/dashboard/companies/#{companyId}"
           return
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
 
-  robot.respond /swallow\D*(\d+)/i, (res) ->
+  robot.respond /swallow\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
-      companyId = res.match[1]
-      pg.connect conString_sg, (err, client, done) ->
+      country = res.match[1]
+      companyId = res.match[2]
+      switch country
+        when 'sg'
+          conString = conString_sg
+          domain = 'com'
+          userId = 12112
+        when 'id'
+          conString = conString_id
+          domain = 'id'
+          userId = 20528
+        else 
+          conString = conString_sg
+      pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
@@ -377,7 +399,7 @@ module.exports = (robot) ->
           if !company
             res.send 'Yo, the company doesn\'t exist, man!'
           else
-            client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = 12112", (err, result) ->
+            client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
@@ -385,17 +407,17 @@ module.exports = (robot) ->
               if result.rows.length>0
                 res.send 'Dang, you are already linked, time-waster!'
               else
-                client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), #{companyId}, 12112)", (err,result) ->
+                client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), #{companyId}, #{userId})", (err,result) ->
                   done()
                   if err
                     return console.error 'Error running query', err
 
-                  client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = 12112", (err, result) ->
+                  client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
                     done()
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Company added at http://glints.com/dashboard/companies/#{companyId}"
+                      res.send "Success! Company added at http://glints.' + domain + '/dashboard/companies/#{companyId}"
                     else
                       res.send "Oops something went wrong!"
           return
