@@ -424,3 +424,31 @@ module.exports = (robot) ->
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+
+  robot.respond /show me the (rupiah|sgd)(?: from (.+) to (.+))?/i, (res) ->
+    currency = res.match[1]
+    startDate = res.match[2]
+    endDate = res.match[3]
+    if !startDate or !endDate
+      res.send "Since you're so incompetent, let me give you an example: \n`show me the #{currency} from 2015-11-30 to 2015-12-31`" +
+       "\nRule of thumb: give the date in ISO 8601 format, in other words, `YYYY-MM-DD`"
+       return
+    showMeTheMoney res, currency, startDate, endDate
+
+  showMeTheMoney = (res, currency, startDate, endDate) ->
+    switch currency
+      when 'rupiah'
+        conString = conString_id
+      when 'sgd'
+        conString = conString_sg
+    pg.connect conString, (err, client, done) ->
+      if err
+          return console.error 'Error fetching client from pool', err
+      client.query "SELECT * from keystats('#{startDate}', '#{endDate}');", (err, result) ->
+        done()
+        if err
+          return console.error 'Error running query', err
+        stats = result.rows[0]
+        for key of stats
+          if stats.hasOwnProperty key
+            res.send key + ': ' + stats[key]
