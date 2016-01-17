@@ -14,10 +14,12 @@
 conString_sg = process.env.HUBOT_PSQL_SG_STRING
 conString_id = process.env.HUBOT_PSQL_ID_STRING
 
-
-glints_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY
+glints_sg_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_SG
+glints_id_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_ID
+request = require 'request'
 moment = require 'moment'
 pg = require 'pg'
+spark = require 'textspark'
 
 module.exports = (robot) ->
 
@@ -424,8 +426,8 @@ module.exports = (robot) ->
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
-
-  robot.respond /show me the (rupiah|sgd)(?: from (.+) to (.+))?/i, (res) ->
+  
+  robot.respond /show me the (rupiah|sgd)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?/i, (res) ->
     currency = res.match[1]
     startDate = res.match[2]
     endDate = res.match[3]
@@ -439,8 +441,12 @@ module.exports = (robot) ->
     switch currency
       when 'rupiah'
         conString = conString_id
+        api = 'http://api.glints.id'
+        glints_admin_key = glints_id_admin_key
       when 'sgd'
         conString = conString_sg
+        api = 'https://api.glints.com'
+        glints_admin_key = glints_sg_admin_key
     pg.connect conString, (err, client, done) ->
       if err
           return console.error 'Error fetching client from pool', err
@@ -449,6 +455,36 @@ module.exports = (robot) ->
         if err
           return console.error 'Error running query', err
         stats = result.rows[0]
+        res.send 'Here goes --->>>'
         for key of stats
           if stats.hasOwnProperty key
-            res.send key + ': ' + stats[key]
+            number = stats[key]
+            if key == 'company'
+              key = 'companies'
+            else if key != 'active'
+              key += 's'
+            timeframe = {
+              'start': startDate,
+              'end': endDate
+            }
+            interval = {
+              n: 1,
+              unit: 'days'
+            }
+            options = {
+              url: api + '/api/admin/' + key + '/statistics?timeframe=' + encodeURIComponent(JSON.stringify(timeframe)) + '&interval=' + encodeURIComponent(JSON.stringify(interval)),
+              headers: {
+                'Authorization': 'Bearer ' + glints_admin_key
+              }
+            }
+            finalPrint options, key, number, res
+  
+  finalPrint = (options, key, number, res) ->
+    request options, (error, response, body) ->
+                  if !error and response.statusCode == 200
+                    statistics = JSON.parse body
+                    trend = statistics.data.map (stat)->
+                      stat.count
+                  res.send key + ': ' + number
+                  if key != 'active'
+                    res.send spark trend
