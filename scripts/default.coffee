@@ -477,7 +477,7 @@ module.exports = (robot) ->
               unit: 'days'
             }
             options = {
-              url: api + '/api/admin/' + key + '/statistics?timeframe=' + encodeURIComponent(JSON.stringify(timeframe)) + '&interval=' + encodeURIComponent(JSON.stringify(interval)),
+              url: api + '/api/admin/' + resource + '/statistics?timeframe=' + encodeURIComponent(JSON.stringify(timeframe)) + '&interval=' + encodeURIComponent(JSON.stringify(interval)),
               headers: {
                 'Authorization': 'Bearer ' + glints_admin_key
               }
