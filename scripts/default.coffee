@@ -459,10 +459,15 @@ module.exports = (robot) ->
         for key of stats
           if stats.hasOwnProperty key
             number = stats[key]
-            if key == 'company'
-              key = 'companies'
-            else if key != 'active'
-              key += 's'
+            switch key
+              when 'company'
+                resource = 'companies'
+              when 'candidate'
+                resource = 'users'
+              when 'active'
+                resource = key
+              else
+                resource = key + 's'
             timeframe = {
               'start': startDate,
               'end': endDate
