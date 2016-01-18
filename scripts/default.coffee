@@ -427,17 +427,18 @@ module.exports = (robot) ->
     else
       res.send 'Bloody hell, please don\'t push your luck.'
   
-  robot.respond /show me the (rupiah|sgd)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?/i, (res) ->
+  robot.respond /show me the (rupiah|sgd)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?(?: with (trend))?/i, (res) ->
     currency = res.match[1]
     startDate = res.match[2]
     endDate = res.match[3]
+    option = res.match[4]
     if !startDate or !endDate
       res.send "Since you're so incompetent, let me give you an example: \n`show me the #{currency} from 2015-11-30 to 2015-12-31`" +
        "\nRule of thumb: give the date in ISO 8601 format, in other words, `YYYY-MM-DD`"
        return
-    showMeTheMoney res, currency, startDate, endDate
+    showMeTheMoney res, currency, startDate, endDate, option
 
-  showMeTheMoney = (res, currency, startDate, endDate) ->
+  showMeTheMoney = (res, currency, startDate, endDate, option) ->
     switch currency
       when 'rupiah'
         conString = conString_id
@@ -482,14 +483,14 @@ module.exports = (robot) ->
                 'Authorization': 'Bearer ' + glints_admin_key
               }
             }
-            finalPrint options, key, number, res
+            finalPrint options, key, number, res, option
   
-  finalPrint = (options, key, number, res) ->
+  finalPrint = (options, key, number, res, option) ->
     request options, (error, response, body) ->
                   if !error and response.statusCode == 200
                     statistics = JSON.parse body
                     trend = statistics.data.map (stat)->
                       stat.count
                   res.send key + ': ' + number
-                  if key != 'active'
+                  if key != 'active' and option == 'trend'
                     res.send spark trend
