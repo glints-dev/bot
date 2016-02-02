@@ -51,8 +51,8 @@ module.exports = (robot) ->
   robot.topic (res) ->
     res.send "#{res.message.text}? That's a Paddlin'"
 
-  enterReplies = ['Hi', 'Target Acquired', 'Firing', 'Hello friend.', 'Gotcha', 'I see you']
-  leaveReplies = ['Are you still there?', 'Target lost', 'Searching']
+  enterReplies = ['Hey there, bud', 'Good day, mate!', 'Addition to the team yay!', 'Hello there, my dearest friend.', 'I got your back, soulmate!', 'I see you there, yippee!', 'Welcome to Glints, the best place to work :)', '欢迎欢迎， 热烈欢迎!']
+  leaveReplies = ['Are you still there?', 'My tears aren\'t stopping.', 'Goodbye Michelle, my dearest friend']
   
   robot.enter (res) ->
     res.send res.random enterReplies
