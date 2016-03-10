@@ -13,6 +13,7 @@
   "dependencies": {
     "aws2js": "^0.8.3",
     "bang": "^1.0.4",
+    "cron": "^1.1.0",
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-ector": "https://github.com/sycurfriend00/hubot-ector/tarball/master",

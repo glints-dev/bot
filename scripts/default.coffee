@@ -240,6 +240,8 @@ module.exports = (robot) ->
                 when 'summary'
                   msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
 
+# Ninja
+
   ask = false
   authenticated = false
   authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'oliveryiu']
@@ -427,6 +429,8 @@ module.exports = (robot) ->
     else
       res.send 'Bloody hell, please don\'t push your luck.'
   
+
+  # Statistics
   robot.respond /show me the (rupiah|sgd)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?(?: with (trend))?/i, (res) ->
     currency = res.match[1]
     startDate = res.match[2]
