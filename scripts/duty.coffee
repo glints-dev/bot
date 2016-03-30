@@ -46,7 +46,6 @@ module.exports = (robot) ->
         trash = '@' + roster.splice(Math.floor(Math.random()*roster.length), 1)[0] + ': Sucks to be you :sweat_drops:, but you are on *trash duty* :bomb: today. No running :running:, I\'m looking at you! *Tie up all trash bags* :moneybag: and *dump them at the refuse* :articulated_lorry: downstairs, plus *put in new plastic bags* :handbag: on the trash cans.'
         eyepower = '@' + roster.splice(Math.floor(Math.random()*roster.length), 1)[0] + ': We didn\'t forget you, you really think eyepower :eye: moves the trashbags? Sorry to burst your bubble, but you are no yoda :yoda:, so please *move your butt* :scream_cat: and help out too.'
         supervisor = '@' + roster.splice(Math.floor(Math.random()*roster.length), 1)[0] + ': Your prayers to Lady Luck :no_good::skin-tone-3: is working, you *supervise* :the_horns::skin-tone-3:. But if the job ain\'t got done, the baton\'s :cry: on you! Maybe you should consider praying to another goddess. :yanrong:'
-        badminton = 'Finally, @alicia, please *activate* your activeSG credits. :badminton_racquet_and_shuttlecock: Credits do not activate themselves, last time we checked.'
         instructions = 'Please put a :thumbsup::skin-tone-3: below your name once you are done. Otherwise, *WE ALL JUDGE YOU*. Judgement Day awaits. As well as a $10 fine. :looi: will be inspecting. He needs cash.'
         robot.messageRoom room, announcement
         robot.messageRoom room, ':dog::cat::mouse::hamster::rabbit::bear::panda_face:'
@@ -55,7 +54,6 @@ module.exports = (robot) ->
         robot.messageRoom room, eyepower
         robot.messageRoom room, supervisor
         robot.messageRoom room, ':leopard::tiger2::water_buffalo::ox::cow2::dromedary_camel::camel:'
-        robot.messageRoom room, badminton
         robot.messageRoom room, instructions
         robot.messageRoom room, ':pray::skin-tone-3::pray::skin-tone-3::pray::skin-tone-3::sensei::pray::skin-tone-3::pray::skin-tone-3::pray::skin-tone-3:'
 
