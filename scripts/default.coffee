@@ -465,11 +465,9 @@ module.exports = (robot) ->
           if stats.hasOwnProperty key
             number = stats[key]
             switch key
-              when 'company'
-                resource = 'companies'
-              when 'candidate'
+              when 'candidates'
                 resource = 'users'
-              when 'active'
+              when 'active' or 'companyowners'
                 resource = key
               else
                 resource = key + 's'
@@ -496,5 +494,5 @@ module.exports = (robot) ->
                     trend = statistics.data.map (stat)->
                       stat.count
                   res.send key + ': ' + number
-                  if key != 'active' and option == 'trend'
+                  if (key != 'active' or key != 'companyowners') and option == 'trend'
                     res.send spark trend
