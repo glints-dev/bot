@@ -244,7 +244,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'oliveryiu']
+  authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo']
   password = new RegExp /clarebearcares/
 
   robot.respond /ninja/i, (res) ->
@@ -428,6 +428,9 @@ module.exports = (robot) ->
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+
+  robot.respond /ninja help/i, (res) ->
+    res.send "`swallow -(sg|id) <companyId>`\n`grant -(sg|id) <companyId>`\n`unlock -(sg|id) <jobId>`"
   
 
   # Statistics
