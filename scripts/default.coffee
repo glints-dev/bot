@@ -434,15 +434,16 @@ module.exports = (robot) ->
   
 
   # Statistics
-  robot.respond /show me the (rupiah|sgd)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?(?: with (trend))?/i, (res) ->
+  robot.respond /show me the (rupiah|sgd|beta)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?(?: with (trend))?/i, (res) ->
     currency = res.match[1]
     startDate = res.match[2]
     endDate = res.match[3]
     option = res.match[4]
     if !startDate or !endDate
+      startDate = moment().format('YYYY-MM-DD')
+      endDate = moment().add(1, 'day').format('YYYY-MM-DD')
       res.send "Since you're so incompetent, let me give you an example: \n`show me the #{currency} from 2015-11-30 to 2015-12-31`" +
-       "\nRule of thumb: give the date in ISO 8601 format, in other words, `YYYY-MM-DD`"
-       return
+       "\nRule of thumb: give the date in ISO 8601 format, in other words, `YYYY-MM-DD`. Nonetheless, out of pity, I will give you today's numbers..."
     showMeTheMoney res, currency, startDate, endDate, option
 
   showMeTheMoney = (res, currency, startDate, endDate, option) ->
@@ -451,45 +452,54 @@ module.exports = (robot) ->
         conString = conString_id
         api = 'http://api.glints.id'
         glints_admin_key = glints_id_admin_key
-      when 'sgd'
+      when 'sgd', 'beta'
         conString = conString_sg
         api = 'https://api.glints.com'
         glints_admin_key = glints_sg_admin_key
     pg.connect conString, (err, client, done) ->
       if err
           return console.error 'Error fetching client from pool', err
-      client.query "SELECT * from keystats('#{startDate}', '#{endDate}');", (err, result) ->
-        done()
-        if err
-          return console.error 'Error running query', err
-        stats = result.rows[0]
-        res.send 'Here goes --->>>'
-        for key of stats
-          if stats.hasOwnProperty key
-            number = stats[key]
-            switch key
-              when 'candidates'
-                resource = 'users'
-              when 'active' or 'companyowners'
-                resource = key
-              else
-                resource = key + 's'
-            timeframe = {
-              'start': startDate,
-              'end': endDate
-            }
-            interval = {
-              n: 1,
-              unit: 'days'
-            }
-            options = {
-              url: api + '/api/admin/' + resource + '/statistics?timeframe=' + encodeURIComponent(JSON.stringify(timeframe)) + '&interval=' + encodeURIComponent(JSON.stringify(interval)),
-              headers: {
-                'Authorization': 'Bearer ' + glints_admin_key
-              }
-            }
-            finalPrint options, key, number, res, option
-  
+      switch currency
+        when 'rupiah', 'sgd'
+          client.query "SELECT * from keystats('#{startDate}', '#{endDate}');", (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
+            stats = result.rows[0]
+            res.send 'Here goes --->>>'
+            for key of stats
+              if stats.hasOwnProperty key
+                number = stats[key]
+                switch key
+                  when 'candidates'
+                    resource = 'users'
+                  when 'active' or 'companyowners'
+                    resource = key
+                  else
+                    resource = key + 's'
+                timeframe = {
+                  'start': startDate,
+                  'end': endDate
+                }
+                interval = {
+                  n: 1,
+                  unit: 'days'
+                }
+                options = {
+                  url: api + '/api/admin/' + resource + '/statistics?timeframe=' + encodeURIComponent(JSON.stringify(timeframe)) + '&interval=' + encodeURIComponent(JSON.stringify(interval)),
+                  headers: {
+                    'Authorization': 'Bearer ' + glints_admin_key
+                  }
+                }
+                finalPrint options, key, number, res, option
+        when 'beta'
+          client.query "SELECT COUNT(DISTINCT \"userId\") from \"ActionLogs\" WHERE \"apiClientId\" like 'ahh%' AND \"createdAt\" >= '#{startDate}' AND \"createdAt\" <= '#{endDate}';", (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
+            count = result.rows[0].count
+            res.send "Number of unique logins: #{count}"
+
   finalPrint = (options, key, number, res, option) ->
     request options, (error, response, body) ->
                   if !error and response.statusCode == 200
