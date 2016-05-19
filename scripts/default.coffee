@@ -432,6 +432,45 @@ module.exports = (robot) ->
   robot.respond /ninja help/i, (res) ->
     res.send "`swallow -(sg|id) <companyId>`\n`grant -(sg|id) <companyId>`\n`unlock -(sg|id) <jobId>`"
   
+  validateEmail = (email) ->
+    re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    re.test email
+
+  robot.respond /show me the resume of (.*) in (sg|id)/i, (res) ->
+    identifier = res.match[1]
+    country = res.match[2]
+    if !identifier
+      res.send "Please grow a brain, the format is `show me the resume for <userId or email> in <sg or id>`"
+    if !country
+      res.send "弱智, please indicate the country. `show me the resume for <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore"
+      country = 'sg'
+    if isNaN(identifier)
+      if !validateEmail identifier
+        res.send 'I know your feeble brain wants to type an email, but the format is simply not valid. Try again.'
+        return
+      suffix =  "AND \"email\" = '#{identifier}'";
+    else
+      identifier = parseInt(identifier)
+      suffix =  "AND \"UserId\" = #{identifier}";
+    switch country
+      when 'sg'
+        conString = conString_sg
+      when 'id'
+        conString = conString_id
+    pg.connect conString, (err, client, done) ->
+      if err
+        return console.error 'Error fetching client from pool', err
+      query = 'SELECT "firstName", "lastName", "resume" from "Users", "CandidateProfiles" WHERE "Users".id = "CandidateProfiles"."UserId" ' + suffix
+      client.query query, (err, result) ->
+        done()
+        if err
+          return console.error 'Error running query', err
+        resume = result.rows[0].resume
+        firstName = result.rows[0].firstName
+        lastName = result.rows[0].lastName
+        resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-dashboard/resume/' + resume
+        res.send lastName + ' ' + firstName + '\'s resume is available here at ' + resumeUrl
+
 
   # Statistics
   robot.respond /show me the (rupiah|sgd|beta)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?(?: with (trend))?/i, (res) ->
