@@ -440,9 +440,9 @@ module.exports = (robot) ->
     identifier = res.match[1]
     country = res.match[2]
     if !identifier
-      res.send "Please grow a brain, the format is `show me the resume for <userId or email> in <sg or id>`"
+      res.send "Please grow a brain, the format is `show me the resume of <userId or email> in <sg or id>`"
     if !country
-      res.send "弱智, please indicate the country. `show me the resume for <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore"
+      res.send "弱智, please indicate the country. `show me the resume of <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore"
       country = 'sg'
     if isNaN(identifier)
       if !validateEmail identifier
@@ -451,7 +451,7 @@ module.exports = (robot) ->
       suffix =  "AND \"email\" = '#{identifier}'";
     else
       identifier = parseInt(identifier)
-      suffix =  "AND \"UserId\" = #{identifier}";
+      suffix =  "AND \"CandidateProfile\".id = #{identifier}";
     switch country
       when 'sg'
         conString = conString_sg
