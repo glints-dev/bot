@@ -451,7 +451,7 @@ module.exports = (robot) ->
       suffix =  "AND \"email\" = '#{identifier}'";
     else
       identifier = parseInt(identifier)
-      suffix =  "AND \"CandidateProfile\".id = #{identifier}";
+      suffix =  "AND \"C\".id = #{identifier}";
     switch country
       when 'sg'
         conString = conString_sg
@@ -460,7 +460,8 @@ module.exports = (robot) ->
     pg.connect conString, (err, client, done) ->
       if err
         return console.error 'Error fetching client from pool', err
-      query = 'SELECT "firstName", "lastName", "resume" from "Users", "CandidateProfiles" WHERE "Users".id = "CandidateProfiles"."UserId" ' + suffix
+      query = 'SELECT "firstName", "lastName", "resume" from "Users" as "U", "CandidateProfiles" as "C" WHERE "U".id = "C"."UserId" ' + suffix
+      console.log(query);
       client.query query, (err, result) ->
         done()
         if err
