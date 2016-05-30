@@ -461,7 +461,6 @@ module.exports = (robot) ->
       if err
         return console.error 'Error fetching client from pool', err
       query = 'SELECT "firstName", "lastName", "resume" from "Users" as "U", "CandidateProfiles" as "C" WHERE "U".id = "C"."UserId" ' + suffix
-      console.log(query);
       client.query query, (err, result) ->
         done()
         if err
