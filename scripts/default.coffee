@@ -253,7 +253,7 @@ module.exports = (robot) ->
   ask = false
   authenticated = false
   authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'esther', 'alicia', 'gladys']
-  password = new RegExp(ninjaPassword, 'g')
+  password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
@@ -375,7 +375,7 @@ module.exports = (robot) ->
             res.send 'Yo, the company doesn\'t exist, man!'
             return
           else if company["isVerified"] and company["PlanId"] == 3
-            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = '#{expiryDate}'' WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = '#{expiryDate}' WHERE id = #{companyId};"
             done()
             if err
               return console.err 'Error running query', err
@@ -385,10 +385,10 @@ module.exports = (robot) ->
                 return console.error 'Error running query', err
               company2 = result.rows[0]
               if company2 and company2["isVerified"] and company2["PlanId"] == 3 and company2["planValidUntil"]
-                res.send "#{company2.name} is granted talent search till #{company2.planValidUntil}"
+                res.send "#{company2.name}\'s talent search is updated to last till #{company2.planValidUntil}"
                 return
           else
-            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3, \"planValidUntil\" = #{expiryDate} WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3, \"planValidUntil\" = '#{expiryDate}' WHERE id = #{companyId};"
             done()
             if err
               return console.err 'Error running query', err
@@ -473,14 +473,14 @@ module.exports = (robot) ->
     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     re.test email
 
-  robot.respond /show me the resume of (.*)(?: in (sg|id))?/i, (res) ->
+  robot.respond /show me the resume of (\S+)(?: in (sg|id))?/i, (res) ->
     identifier = res.match[1]
     country = res.match[2]
     if !identifier
       res.send "Please grow a brain, the format is `show me the resume of <userId or email> in <sg or id>`"
       return
     if !country
-      res.send "弱智, please indicate the country. `show me the resume of <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore"
+      res.send "弱智, please indicate the country. `show me the resume of <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore."
       country = 'sg'
     if isNaN(identifier)
       if !validateEmail identifier
