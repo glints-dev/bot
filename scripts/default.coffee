@@ -13,9 +13,11 @@
 
 conString_sg = process.env.HUBOT_PSQL_SG_STRING
 conString_id = process.env.HUBOT_PSQL_ID_STRING
+ninjaPassword = process.env.HUBOT_NINJA_PASSWORD
 
 glints_sg_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_SG
 glints_id_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_ID
+
 request = require 'request'
 moment = require 'moment'
 pg = require 'pg'
@@ -106,7 +108,7 @@ module.exports = (robot) ->
     robot.logger.error "DOES NOT COMPUTE"
   
     if res?
-      res.send "SPUTTER SPUTTER"
+      res.send "SPUTTER SPUTTER. I AM PUKING OIL."
   
   robot.respond /have a soda/i, (res) ->
     # Get number of sodas had (coerced to a number).
@@ -123,15 +125,6 @@ module.exports = (robot) ->
   robot.respond /sleep it off/i, (res) ->
     robot.brain.set 'totalSodas', 0
     res.reply 'zzzzz'
-
-  robot.respond /.*(active|users|jobs|applications|companies|candidates|summary).*(today|yesterday|this week|last week|this month|last month|total)/i, (res) ->
-    resource = res.match[1].toLowerCase()
-    time = res.match[2].toLowerCase()
-    if resource != 'summary'
-      stats res, resource, time, 'single'
-    else
-      res.send "Summary for #{time}:"
-      stats res, thing, time, 'summary' for thing in ['users','jobs','applications','companies','candidates', 'active']
 
   stats = (msg, resource, time, mode) ->
     res = resource
@@ -201,8 +194,10 @@ module.exports = (robot) ->
             switch mode
               when 'single'
                 msg.send "Glints has *#{count}* #{resource} #{time} #{updown} *#{count2}* #{symbol} *#{growth}*"
+                return
               when 'summary'
                 msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
+                return
     else
         if res == 'candidates' or res == 'companies'
           switch res
@@ -219,13 +214,14 @@ module.exports = (robot) ->
         glints_url2 = 'https://api.glints.com/api/admin/' + res + '?limit=1&where=' + JSON.stringify(where2)
 
         msg.http(glints_url)
-          .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
+          .header('Authorization', "Bearer #{glints_sg_admin_key}")
           .get() (err, _, body) ->
             return res.send "Sorry, the tubes are broken." if err
+            console.log body
             data = JSON.parse(body.toString("utf8"))
             count = data.count
             msg.http(glints_url2)
-            .header('Authorization', 'Bearer hSXhkG0HYbMLVQ0rzjIxugTlLKIeCXIRH7YYPxJuXPkpoVxndOPycREI7Kh5mXToicjJKQNBVGUBwokyRxvVD0rL8HTasBHw9aqS7eOeyjjSd3NsjFf1EpkdoCSXPKob6FodK7Kn9anZe1d0lVplDGmczRImqtsczVfsV0YmxALjjzMBHJcuFgYmfVFDDdsLXkIXP5NTvCVQTsG9NvCbaBdZTRXaLEFMGFfG6x9RoIGjo9fZDxZrjuYSHMJWA9He')
+            .header('Authorization', "Bearer #{glints_sg_admin_key}")
             .get() (err, _, body) ->
               return res.send "Sorry, the tubes are broken." if err
               data2 = JSON.parse(body.toString("utf8"))
@@ -237,15 +233,28 @@ module.exports = (robot) ->
               switch mode
                 when 'single'
                   msg.send "Glints has *#{count}* #{resource} #{time} #{updown} *#{count2}* #{symbol} *#{growth}*"
+                  return
                 when 'summary'
                   msg.send "*#{count}* #{resource} #{updown} *#{count2}* #{symbol} *#{growth}*"
+                  return
+
+  robot.respond /.*(active|users|jobs|applications|companies|candidates|summary).*(today|yesterday|this week|last week|this month|last month|total)/i, (res) ->
+    resource = res.match[1].toLowerCase()
+    time = res.match[2].toLowerCase()
+    if resource != 'summary'
+      stats res, resource, time, 'single'
+      return
+    else
+      res.send "Summary for #{time}:"
+      stats res, thing, time, 'summary' for thing in ['users','jobs','applications','companies','candidates', 'active']
+      return
 
 # Ninja
 
   ask = false
   authenticated = false
   authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'esther', 'alicia', 'gladys']
-  password = new RegExp /clarebearcares/
+  password = new RegExp(ninjaPassword, 'g')
 
   robot.respond /ninja/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
@@ -258,8 +267,10 @@ module.exports = (robot) ->
         , 60000)
       else
         res.send 'Already authorized, please proceed.'
+        return
     else
       res.send 'Sorry, this is a Clare Bear privilege, and you\'re neither a Clare nor a bear'
+      return
 
   robot.respond password, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
@@ -267,15 +278,17 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`unlock -(id|sg) <jobId>` to unlock jobs in either indonesia or singapore \n`grant -(id|sg) <companyId>` to grant talent search in either indonesia or singapore\n`swallow -(id|sg) <companyId>` to add to ops@glints.com'
+        res.send '`unlock -(id|sg) <jobId>` to unlock jobs in either indonesia or singapore \n`grant -(id|sg) <companyId> till <expiryDate| YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -(id|sg) <companyId>` to add to ops@glints.com'
         setTimeout(->
           ask = false
           return
         , 600000)
       else
         res.send 'What the heck do you want?'
+        return
     else
-      res.send 'hahaha!'
+      res.send 'Blub blub blub! Did anyone say you have the face and brain of a goldfish?'
+      return
 
 
   robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
@@ -301,7 +314,8 @@ module.exports = (robot) ->
 
           job = result.rows[0]
           if !job
-            res.send 'Yo, the job doesn\'t exist, man!'
+            res.send 'Yo, the job doesn\'t exist, man! So shouldn\'t you!'
+            return
           else
             companyId = job['CompanyId']
             client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = #{companyId} AND \"JobId\" = #{jobId}", (err, result) ->
@@ -311,30 +325,36 @@ module.exports = (robot) ->
               
               if result.rows.length>0
                 res.send 'Dang, it\'s already unlocked, gimme a break!'
+                return
               else
                 client.query "INSERT INTO \"Entitlements\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"JobId\") VALUES (now(), now(), #{companyId}, #{jobId})", (err,result) ->
                   done()
                   if err
                     return console.error 'Error running query', err
-
                   client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = #{companyId} AND \"JobId\" = #{jobId}", (err, result) ->
                     done()
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
                       res.send "Success! Job unlocked at http://glints." + domain + "/dashboard/jobs/#{jobId}"
+                      return
                     else
                       res.send "Oops something went wrong!"
+                      return
           return
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+      return
 
-
-  robot.respond /grant\ -(sg|id)\ (\d+)/i, (res) ->
+  robot.respond /grunt\ -(sg|id)\ (\d+)(?: till ((?:\d|\-)+))?/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       country = res.match[1]
       companyId = res.match[2]
+      expiryDate = res.match[3]
+      if !expiryDate
+        res.send "弱智， please include an ISO date in the style of `YYYY-MM-DD`. Like so `2016-12-31`."
+        return
       switch country
         when 'sg'
           conString = conString_sg
@@ -345,20 +365,32 @@ module.exports = (robot) ->
         else 
           conString = conString_sg
       pg.connect conString, (err, client, done) ->
+        console.log conString
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
           done()
           if err
             return console.error 'Error running query', err
-
           company = result.rows[0]
           if !company
             res.send 'Yo, the company doesn\'t exist, man!'
+            return
           else if company["isVerified"] and company["PlanId"] == 3
-            res.send 'You\'re wasting my time, this company is already on talent search!'
+            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = #{expiryDate} WHERE id = #{companyId};"
+            done()
+            if err
+              return console.err 'Error running query', err
+            client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
+              done()
+              if err
+                return console.error 'Error running query', err
+              company2 = result.rows[0]
+              if company2 and company2["isVerified"] and company2["PlanId"] == 3 and company2["planValidUntil"]
+                res.send "#{company2.name} is granted talent search till #{company2.planValidUntil}"
+                return
           else
-            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3 WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3, \"planValidUntil\" = #{expiryDate} WHERE id = #{companyId};"
             done()
             if err
               return console.err 'Error running query', err
@@ -367,14 +399,18 @@ module.exports = (robot) ->
               done()
               if err
                 return console.error 'Error running query', err
-
               company2 = result.rows[0]
-              if company2 and company2["isVerified"] and company2["PlanId"] == 3
-                res.send "Success! Company granted talent search at http://glints." + domain + "/dashboard/companies/#{companyId}"
+              if company2 and company2["isVerified"] and company2["PlanId"] == 3 and company2["planValidUntil"]
+                res.send "Success! #{company2.name} granted talent search until #{company2.planValidUntil} at http://glints." + domain + "/dashboard/companies/#{companyId}"
+                return
+              else
+                res.send "Oops, something went wrong. Please try again."
+                return
           return
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+      return
 
   robot.respond /swallow\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
@@ -401,13 +437,13 @@ module.exports = (robot) ->
 
           company = result.rows[0]
           if !company
-            res.send 'Yo, the company doesn\'t exist, man!'
+            res.send 'Yo, the company doesn\'t exist, man! And neither does your brain.'
+            return
           else
             client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
-              
               if result.rows.length>0
                 res.send 'Dang, you are already linked, time-waster!'
               else
@@ -415,32 +451,36 @@ module.exports = (robot) ->
                   done()
                   if err
                     return console.error 'Error running query', err
-
                   client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
                     done()
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
                       res.send "Success! Company added at http://glints." + domain + "/dashboard/companies/#{companyId}"
+                      return
                     else
                       res.send "Oops something went wrong!"
+                      return
           return
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+      return
 
   robot.respond /ninja help/i, (res) ->
-    res.send "`swallow -(sg|id) <companyId>`\n`grant -(sg|id) <companyId>`\n`unlock -(sg|id) <jobId>`"
+    res.send "`swallow -(sg|id) <companyId>`\n`grant -(sg|id) <companyId> till <expiryDate| YYYY-MM-DD>`\n`unlock -(sg|id) <jobId>`"
+    return
   
   validateEmail = (email) ->
     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     re.test email
 
-  robot.respond /show me the resume of (.*) in (sg|id)/i, (res) ->
+  robot.respond /show me the resume of (.*)(?: in (sg|id))?/i, (res) ->
     identifier = res.match[1]
     country = res.match[2]
     if !identifier
       res.send "Please grow a brain, the format is `show me the resume of <userId or email> in <sg or id>`"
+      return
     if !country
       res.send "弱智, please indicate the country. `show me the resume of <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore"
       country = 'sg'
@@ -465,11 +505,16 @@ module.exports = (robot) ->
         done()
         if err
           return console.error 'Error running query', err
-        resume = result.rows[0].resume
-        firstName = result.rows[0].firstName
-        lastName = result.rows[0].lastName
-        resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-dashboard/resume/' + resume
-        res.send lastName + ' ' + firstName + '\'s resume is available here at ' + resumeUrl
+        if result.rows.length > 0
+          resume = result.rows[0].resume
+          firstName = result.rows[0].firstName
+          lastName = result.rows[0].lastName
+          resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-dashboard/resume/' + resume
+          res.send lastName + ' ' + firstName + '\'s resume is available here at ' + resumeUrl
+          return
+        else
+          res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
+          return
 
 
   # Statistics
@@ -538,6 +583,7 @@ module.exports = (robot) ->
               return console.error 'Error running query', err
             count = result.rows[0].count
             res.send "Number of unique logins: #{count}"
+            return
 
   finalPrint = (options, key, number, res, option) ->
     request options, (error, response, body) ->
@@ -548,3 +594,4 @@ module.exports = (robot) ->
                   res.send key + ': ' + number
                   if (key != 'active' or key != 'companyowners') and option == 'trend'
                     res.send spark trend
+                    return
