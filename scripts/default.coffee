@@ -217,7 +217,6 @@ module.exports = (robot) ->
           .header('Authorization', "Bearer #{glints_sg_admin_key}")
           .get() (err, _, body) ->
             return res.send "Sorry, the tubes are broken." if err
-            console.log body
             data = JSON.parse(body.toString("utf8"))
             count = data.count
             msg.http(glints_url2)
@@ -347,7 +346,7 @@ module.exports = (robot) ->
       res.send 'Bloody hell, please don\'t push your luck.'
       return
 
-  robot.respond /grunt\ -(sg|id)\ (\d+)(?: till ((?:\d|\-)+))?/i, (res) ->
+  robot.respond /grant\ -(sg|id)\ (\d+)(?: till ((?:\d|\-)+))?/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       country = res.match[1]
       companyId = res.match[2]
@@ -365,7 +364,6 @@ module.exports = (robot) ->
         else 
           conString = conString_sg
       pg.connect conString, (err, client, done) ->
-        console.log conString
         if err
           return console.error 'Error fetching client from pool', err
         client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
@@ -377,7 +375,7 @@ module.exports = (robot) ->
             res.send 'Yo, the company doesn\'t exist, man!'
             return
           else if company["isVerified"] and company["PlanId"] == 3
-            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = #{expiryDate} WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = '#{expiryDate}'' WHERE id = #{companyId};"
             done()
             if err
               return console.err 'Error running query', err
