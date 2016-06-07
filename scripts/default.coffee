@@ -279,7 +279,7 @@ module.exports = (robot) ->
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
         res.send '`unlock -(id|sg) <jobId>` to unlock jobs in either indonesia or singapore \n`grant -(id|sg) <companyId> till <expiryDate| YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -(id|sg) <companyId>` to add to ops@glints.com'
         setTimeout(->
-          ask = false
+          authenticated = false
           return
         , 600000)
       else
