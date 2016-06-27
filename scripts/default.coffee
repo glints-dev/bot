@@ -509,7 +509,7 @@ module.exports = (robot) ->
           lastName = result.rows[0].lastName
           if country == 'sg'
             resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-dashboard/resume/' + resume
-          else country == 'id'
+          else if country == 'id'
             resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-id-dashboard/resume/' + resume
           res.send lastName + ' ' + firstName + '\'s resume is available here at ' + resumeUrl
           return
