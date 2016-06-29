@@ -173,13 +173,13 @@ module.exports = (robot) ->
         if err
           return console.error 'Error fetching client from pool', err
 
-        client.query "SELECT activeusers('#{da[0]}', '#{da[1]}');", (err, result) ->
+        client.query "SELECT activeusers($1, $2);", [da[0], da[1]], (err, result) ->
           done()
           if err
             return console.error 'Error running query', err
           count = result.rows[0]['activeusers']
 
-          client.query "SELECT activeusers('#{da[2]}', '#{da[0]}');", (err, result) ->
+          client.query "SELECT activeusers($1, $2);", [da[0], da[1]], (err, result) ->
             done()
             if err
               return console.error 'Error running query', err
@@ -306,7 +306,7 @@ module.exports = (robot) ->
       pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
-        client.query "SELECT * FROM \"Jobs\" WHERE \"id\" = #{jobId}", (err, result) ->
+        client.query "SELECT * FROM \"Jobs\" WHERE \"id\" = $1", [jobId], (err, result) ->
           done()
           if err
             return console.error 'Error running query', err
@@ -317,7 +317,7 @@ module.exports = (robot) ->
             return
           else
             companyId = job['CompanyId']
-            client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = #{companyId} AND \"JobId\" = #{jobId}", (err, result) ->
+            client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = $1 AND \"JobId\" = $2", [companyId, jobId], (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
@@ -326,11 +326,11 @@ module.exports = (robot) ->
                 res.send 'Dang, it\'s already unlocked, gimme a break!'
                 return
               else
-                client.query "INSERT INTO \"Entitlements\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"JobId\") VALUES (now(), now(), #{companyId}, #{jobId})", (err,result) ->
+                client.query "INSERT INTO \"Entitlements\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"JobId\") VALUES (now(), now(), $1, $2)", [companyId, jobId],(err,result) ->
                   done()
                   if err
                     return console.error 'Error running query', err
-                  client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = #{companyId} AND \"JobId\" = #{jobId}", (err, result) ->
+                  client.query "SELECT * FROM \"Entitlements\" WHERE \"CompanyId\" = $1 AND \"JobId\" = $2", [companyId, jobId], (err, result) ->
                     done()
                     if err
                       return console.error 'Error running query', err
@@ -366,7 +366,7 @@ module.exports = (robot) ->
       pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
-        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
+        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId], (err, result) ->
           done()
           if err
             return console.error 'Error running query', err
@@ -375,11 +375,11 @@ module.exports = (robot) ->
             res.send 'Yo, the company doesn\'t exist, man!'
             return
           else if company["isVerified"] and company["PlanId"] == 3
-            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = '#{expiryDate}' WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"planValidUntil\" = $1 WHERE id = $2;", [expiryDate, companyId]
             done()
             if err
               return console.err 'Error running query', err
-            client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
+            client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId],(err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
@@ -388,12 +388,12 @@ module.exports = (robot) ->
                 res.send "#{company2.name}\'s talent search is updated to last till #{company2.planValidUntil}"
                 return
           else
-            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3, \"planValidUntil\" = '#{expiryDate}' WHERE id = #{companyId};"
+            client.query "UPDATE \"Companies\" SET \"isVerified\" = TRUE, \"PlanId\" = 3, \"planValidUntil\" = '#{expiryDate}' WHERE id = $1;", [companyId]
             done()
             if err
               return console.err 'Error running query', err
 
-            client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
+            client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId], (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
@@ -428,7 +428,7 @@ module.exports = (robot) ->
       pg.connect conString, (err, client, done) ->
         if err
           return console.error 'Error fetching client from pool', err
-        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = #{companyId}", (err, result) ->
+        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId], (err, result) ->
           done()
           if err
             return console.error 'Error running query', err
@@ -438,18 +438,18 @@ module.exports = (robot) ->
             res.send 'Yo, the company doesn\'t exist, man! And neither does your brain.'
             return
           else
-            client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
+            client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
               if result.rows.length>0
                 res.send 'Dang, you are already linked, time-waster!'
               else
-                client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), #{companyId}, #{userId})", (err,result) ->
+                client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), $1, $2)", [companyId, userId], (err,result) ->
                   done()
                   if err
                     return console.error 'Error running query', err
-                  client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = #{companyId} AND \"UserId\" = #{userId}", (err, result) ->
+                  client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
                     done()
                     if err
                       return console.error 'Error running query', err
@@ -486,10 +486,10 @@ module.exports = (robot) ->
       if !validateEmail identifier
         res.send 'I know your feeble brain wants to type an email, but the format is simply not valid. Try again.'
         return
-      suffix =  "AND \"email\" = '#{identifier}'";
+      suffix =  "WHERE email = $1";
     else
       identifier = parseInt(identifier)
-      suffix =  "AND \"C\".id = #{identifier}";
+      suffix =  "WHERE id = $1";
     switch country
       when 'sg'
         conString = conString_sg
@@ -498,8 +498,8 @@ module.exports = (robot) ->
     pg.connect conString, (err, client, done) ->
       if err
         return console.error 'Error fetching client from pool', err
-      query = 'SELECT "firstName", "lastName", "resume" from "Users" as "U", "CandidateProfiles" as "C" WHERE "U".id = "C"."UserId" ' + suffix
-      client.query query, (err, result) ->
+      query = 'SELECT "firstName", "lastName", "resume" from "Users" ' + suffix
+      client.query query, [identifier], (err, result) ->
         done()
         if err
           return console.error 'Error running query', err
@@ -546,7 +546,7 @@ module.exports = (robot) ->
           return console.error 'Error fetching client from pool', err
       switch currency
         when 'rupiah', 'sgd'
-          client.query "SELECT * from keystats('#{startDate}', '#{endDate}');", (err, result) ->
+          client.query "SELECT * from keystats($1, $2);", [startDate, endDate] ,(err, result) ->
             done()
             if err
               return console.error 'Error running query', err
@@ -578,7 +578,7 @@ module.exports = (robot) ->
                 }
                 finalPrint options, key, number, res, option
         when 'beta'
-          client.query "SELECT COUNT(DISTINCT \"userId\") from \"ActionLogs\" WHERE \"apiClientId\" like 'ahh%' AND \"createdAt\" >= '#{startDate}' AND \"createdAt\" <= '#{endDate}';", (err, result) ->
+          client.query "SELECT COUNT(DISTINCT \"userId\") from \"ActionLogs\" WHERE \"apiClientId\" like 'ahh%' AND \"createdAt\" >= $1 AND \"createdAt\" <= $2;", [startDate, endDate], (err, result) ->
             done()
             if err
               return console.error 'Error running query', err
