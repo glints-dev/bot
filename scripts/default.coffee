@@ -13,7 +13,7 @@
 
 conString_sg = process.env.HUBOT_PSQL_SG_STRING
 conString_id = process.env.HUBOT_PSQL_ID_STRING
-ninjaPassword = process.env.HUBOT_NINJA_PASSWORD
+ninjaPassword = process.env.HUBOT_NINJA_PASSWORD || 'abcdefghijklmnopqrstuvwxyz'
 
 glints_sg_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_SG
 glints_id_admin_key = process.env.HUBOT_GLINTS_ADMIN_KEY_ID
@@ -252,7 +252,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'esther', 'alicia', 'gladys', 'stevesutanto']
+  authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'esther', 'gladys', 'stevesutanto']
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
@@ -473,14 +473,14 @@ module.exports = (robot) ->
     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     re.test email
 
-  robot.respond /show me the resume of (\S+)(?: in (sg|id))?/i, (res) ->
+  robot.respond /show me the talent (\S+)(?: in (sg|id))?/i, (res) ->
     identifier = res.match[1]
     country = res.match[2]
     if !identifier
-      res.send "Please grow a brain, the format is `show me the resume of <userId or email> in <sg or id>`"
+      res.send "Please grow a brain, the format is `show me the talent <userId or email> in <sg or id>`"
       return
     if !country
-      res.send "弱智, please indicate the country. `show me the resume of <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore."
+      res.send "弱智, please indicate the country. `show me the talent <userId or email> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore."
       country = 'sg'
     if isNaN(identifier)
       if !validateEmail identifier
@@ -498,20 +498,24 @@ module.exports = (robot) ->
     pg.connect conString, (err, client, done) ->
       if err
         return console.error 'Error fetching client from pool', err
-      query = 'SELECT "firstName", "lastName", "resume" from "Users" ' + suffix
+      query = 'SELECT "profilePic", "id", "intro", firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" ' + suffix
       client.query query, [identifier], (err, result) ->
         done()
         if err
           return console.error 'Error running query', err
         if result.rows.length > 0
-          resume = result.rows[0].resume
-          firstName = result.rows[0].firstName
-          lastName = result.rows[0].lastName
+          sendArray = result.rows[0]
+          awsUrlSeed = 'http://s3-ap-southeast-1.amazonaws.com/'
+          countryUrl = ''
           if country == 'sg'
-            resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-dashboard/resume/' + resume
+            countryUrl = 'glints-dashboard/'
           else if country == 'id'
-            resumeUrl = 'http://s3-ap-southeast-1.amazonaws.com/glints-id-dashboard/resume/' + resume
-          res.send lastName + ' ' + firstName + '\'s resume is available here at ' + resumeUrl
+            countryUrl = 'glints-id-dashboard/'
+          sendArray.resume = if sendArray.resume then awsUrlSeed + countryUrl + 'resume/' + sendArray.resume else null
+          sendArray.profilePic = if sendArray.profilePic then awsUrlSeed + countryUrl + 'profile-picture/' + sendArray.profilePic else null
+          for i of sendArray
+            if sendArray.hasOwnProperty(i)
+              res.send '*' + i  + ':* ' + sendArray[i]
           return
         else
           res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
