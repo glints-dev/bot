@@ -498,7 +498,7 @@ module.exports = (robot) ->
     pg.connect conString, (err, client, done) ->
       if err
         return console.error 'Error fetching client from pool', err
-      query = 'SELECT "profilePic", "id", "intro", firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" ' + suffix
+      query = 'SELECT "profilePic", "id", "intro", "firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" ' + suffix
       client.query query, [identifier], (err, result) ->
         done()
         if err
