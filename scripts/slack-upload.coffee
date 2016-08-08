@@ -33,15 +33,13 @@ module.exports = (robot) ->
       res.send "Bodoh, please indicate the country. `show me the referral <refCode> in <sg or id>`. But out of the kindness of my metal heart, I'm assuming Indonesia."
       country = 'id'
     switch country
-        when 'sg'
-          conString = conString_sg
-          domain = 'com'
-        when 'id'
-          conString = conString_id
-          domain = 'id'
-        else 
-          conString = conString_id
-    pg.connect conString_id, (err, client, done) ->
+      when 'sg'
+        conString = conString_sg
+      when 'id'
+        conString = conString_id
+      else 
+        conString = conString_id
+    pg.connect conString, (err, client, done) ->
       if err
          return console.error 'Error fetching client from pool', err
       client.query 'SELECT email, referral, resume, CASE WHEN "emailVerificationToken" ISNULL THEN TRUE ELSE FALSE END as "isVerified" FROM "Users" WHERE referral = $1', [referral], (err, result) ->
