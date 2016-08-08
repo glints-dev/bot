@@ -10,6 +10,7 @@
 # Commands:
 #   show me the applicants for job <id>
 #   show me the referral <refCode> in <id|sg>
+#   show me the weekly stats of <id|sg>
 #
 # Author:
 #   Ying Cong
@@ -25,6 +26,56 @@ conString_sg = process.env.HUBOT_PSQL_SG_STRING
 conString_id = process.env.HUBOT_PSQL_ID_STRING
 
 module.exports = (robot) ->
+  robot.hear /show me the weekly stats of (sg|id)?/i, (res) ->
+    channel = res.message.rawMessage.channel
+    real_name = res.message.user.slack.profile.first_name
+    country = res.match[1]
+    if !country
+      res.send "Dimwit, please indicate the country. `show me the weekly stats of <sg or id>`. But out of the kindness of my metal heart, I'm assuming Singapore."
+      country = 'sg'
+    switch country
+      when 'sg'
+        conString = conString_sg
+      when 'id'
+        conString = conString_id
+      else 
+        conString = conString_sg
+    pg.connect conString, (err, client, done) ->
+      if err
+         return console.error 'Error fetching client from pool', err
+      client.query 'SELECT * FROM weekly()', (err, result) ->
+        done()
+        if err
+          return console.error 'Error running query', err
+        weekly = result.rows
+        fields = ['application_count', 'job_count', 'user_count', 'company_count', 'candidate_count', 'active_users', 'monday']
+        json2csv {
+          data: weekly,
+          fields: fields
+        }, (err, csv) ->
+          if err
+            throw err
+          fileName = "weekly_for_#{country}.csv"
+          fs.writeFile fileName, csv, (err) ->
+            if err
+              throw err
+            filePath = path.join(__dirname, '..', fileName)
+            slack.uploadFile {
+              file: fs.createReadStream filePath
+              filetype: 'csv'
+              title: "To my illicit spouse #{real_name} :kissing_heart:"
+              channels: channel
+              initialComment: "Weekly stats for #{country}"
+            }, (err) ->
+              if err
+                console.error err
+              else
+                fs.unlinkSync filePath
+              return
+            return
+          return
+                 
+        
   robot.hear /show me the referral (\S+)(?: in (sg|id))?/i, (res) ->
     channel = res.message.rawMessage.channel
     real_name = res.message.user.slack.profile.first_name
