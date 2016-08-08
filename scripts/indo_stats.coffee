@@ -5,12 +5,10 @@
 #   None
 #
 # Configuration:
-#   HUBOT_PSQL_SG_STRING
 #   HUBOT_PSQL_ID_STRING
 #
 # Commands:
-#   show me the applicants for job <id>
-#   show me the referral <refCode> in <id|sg>
+#   show me the <itb|ui>
 #
 # Author:
 #   Ying Cong
