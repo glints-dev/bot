@@ -9,6 +9,7 @@
 #
 # Commands:
 #   show me the applicants for job <id>
+#   show me the referral <refCode> in <id|sg>
 #
 # Author:
 #   Ying Cong
