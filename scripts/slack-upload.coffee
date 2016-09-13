@@ -85,8 +85,10 @@ module.exports = (robot) ->
     startDate = res.match[3]
     endDate = res.match[4]
     if !country or !startDate or !endDate
-      res.send "Bodoh, please indicate the country. `show me the referral <refCode> in <sg or id> from <isoDate> to <isoDate>`. But out of the kindness of my metal heart, I'm assuming Indonesia."
+      res.send "Bodoh, please indicate the country. `show me the referral <refCode> in <sg or id> from <isoDate> to <isoDate>`. But out of the kindness of my metal heart, I'm assuming Indonesia and forever"
       country = 'id'
+      startDate = '01-01-2000'
+      endDate = '01-01-3000'
     switch country
       when 'sg'
         conString = conString_sg
@@ -97,12 +99,12 @@ module.exports = (robot) ->
     pg.connect conString, (err, client, done) ->
       if err
          return console.error 'Error fetching client from pool', err
-      client.query 'SELECT email, referral, resume, CASE WHEN "emailVerificationToken" ISNULL THEN TRUE ELSE FALSE END as "isVerified", CASE WHEN e.type = \'EDUCATION\' THEN TRUE ELSE FALSE END AS "Profile",CASE WHEN e.type = \'EDUCATION\' AND(e.institution ILIKE \'ui\' or e.institution ILIKE \'%Universitas Indonesia%\' or e.institution ILIKE \'University of Indonesia\') THEN TRUE ELSE FALSE END as "UI", CASE WHEN e.type = \'EDUCATION\' AND (e.institution ILIKE \'itb\' or e.institution ILIKE \'%Institut Teknologi Bandung%\' or e.institution ILIKE \'%Institute Technology of Bandung%\' or e.institution ILIKE \'%Bandung Institute of Technology%\' or e.institution ILIKE \'%Ganesha 10%\') THEN TRUE ELSE FALSE END AS "ITB" FROM "Users" as u LEFT JOIN "Experiences" as e on u.id = e."UserId" AND referral ILIKE $1 AND u."createdAt" >= $2 AND u."createdAt" <= $3;', [referral, startDate, endDate], (err, result) ->
+      client.query 'SELECT email, referral, resume, CASE WHEN "emailVerificationToken" ISNULL THEN TRUE ELSE FALSE END as "isVerified", CASE WHEN e.type = \'EDUCATION\' THEN TRUE ELSE FALSE END AS "profile",CASE WHEN e.type = \'EDUCATION\' AND(e.institution ILIKE \'ui\' or e.institution ILIKE \'%Universitas Indonesia%\' or e.institution ILIKE \'University of Indonesia\') THEN TRUE ELSE FALSE END as "UI", CASE WHEN e.type = \'EDUCATION\' AND (e.institution ILIKE \'itb\' or e.institution ILIKE \'%Institut Teknologi Bandung%\' or e.institution ILIKE \'%Institute Technology of Bandung%\' or e.institution ILIKE \'%Bandung Institute of Technology%\' or e.institution ILIKE \'%Ganesha 10%\') THEN TRUE ELSE FALSE END AS "ITB" FROM "Users" as u LEFT JOIN "Experiences" as e on u.id = e."UserId" WHERE referral ILIKE $1 AND u."createdAt" >= $2 AND u."createdAt" <= $3;', [referral, startDate, endDate], (err, result) ->
         done()
         if err
           return console.error 'Error running query', err
         allUsers = result.rows
-        total = users.length
+        total = allUsers.length
         if total == 0
             res.reply "Bodoh, no users registered under this referral code! :japanese_ogre:"
             return
@@ -110,6 +112,18 @@ module.exports = (robot) ->
           verified: {
             self: [],
             CV: {
+              self: [],
+              profile: {
+                self: [],
+                UI: {
+                  self: []
+                  },
+                ITB: {
+                  self: []
+                }
+              }
+            },
+            noCV: {
               self: [],
               profile: {
                 self: [],
@@ -135,6 +149,18 @@ module.exports = (robot) ->
                   self: []
                 }
               }
+            },
+            noCV: {
+              self: [],
+              profile: {
+                self: [],
+                UI: {
+                  self: []
+                  },
+                ITB: {
+                  self: []
+                }
+              }
             }
           }
         }
@@ -143,33 +169,32 @@ module.exports = (robot) ->
         )
 
        # Verified with CV
-        users.verified.CV.self = users.verified.self.filter(u) ->
+        users.verified.CV.self = users.verified.self.filter((u) ->
           u.resume
         )
-        users.verified.CV.profile.self = users.verified.CV.self.filter(u) ->
+        users.verified.CV.profile.self = users.verified.CV.self.filter((u) ->
           u.profile
         )
-        users.verified.CV.profile.UI.self = users.verified.CV.profile.self.filter(u) ->
+        users.verified.CV.profile.UI.self = users.verified.CV.profile.self.filter((u) ->
           u.UI
         )
-        users.verified.CV.profile.ITB.self = users.verified.CV.profile.self.filter(u) ->
+        users.verified.CV.profile.ITB.self = users.verified.CV.profile.self.filter((u) ->
           u.ITB
         )
 
         # Verified but no CV
-        users.verified.noCV.self = users.verified.self.filter(u) ->
+        users.verified.noCV.self = users.verified.self.filter((u) ->
           !u.resume
         )
-        users.verified.noCV.profile.self = users.verified.noCV.self.filter(u) ->
+        users.verified.noCV.profile.self = users.verified.noCV.self.filter((u) ->
           u.profile
         )
-        users.verified.noCV.profile.UI.self = users.verified.noCV.profile.self.filter(u) ->
+        users.verified.noCV.profile.UI.self = users.verified.noCV.profile.self.filter((u) ->
           u.UI
         )
-        users.verified.noCV.profile.ITB.self = users.verified.noCV.profile.self.filter(u) ->
+        users.verified.noCV.profile.ITB.self = users.verified.noCV.profile.self.filter((u) ->
           u.ITB
         )
-
 
         #  Unverified users
         users.unverified.self = allUsers.filter((u) ->
@@ -177,32 +202,33 @@ module.exports = (robot) ->
         )
 
         # Unverified with CV
-        users.unverified.CV.self = users.unverified.self.filter(u) ->
+        users.unverified.CV.self = users.unverified.self.filter((u) ->
           u.resume
         )
-        users.unverified.CV.profile.self = users.unverified.CV.self.filter(u) ->
+        users.unverified.CV.profile.self = users.unverified.CV.self.filter((u) ->
           u.profile
         )
-        users.unverified.CV.profile.UI.self = users.unverified.CV.profile.self.filter(u) ->
+        users.unverified.CV.profile.UI.self = users.unverified.CV.profile.self.filter((u) ->
           u.UI
         )
-        users.unverified.CV.profile.ITB.self = users.unverified.CV.profile.self.filter(u) ->
+        users.unverified.CV.profile.ITB.self = users.unverified.CV.profile.self.filter((u) ->
           u.ITB
         )
 
         # Unverified and no CV
-        users.unverified.noCV.self = users.unverified.self.filter(u) ->
+        users.unverified.noCV.self = users.unverified.self.filter((u) ->
           !u.resume
         )
-        users.unverified.noCV.profile.self = users.unverified.noCV.self.filter(u) ->
+        users.unverified.noCV.profile.self = users.unverified.noCV.self.filter((u) ->
           u.profile
         )
-        users.unverified.noCV.profile.UI.self = users.unverified.noCV.profile.self.filter(u) ->
+        users.unverified.noCV.profile.UI.self = users.unverified.noCV.profile.self.filter((u) ->
           u.UI
         )
-        users.unverified.noCV.profile.ITB.self = users.unverified.noCV.profile.self.filter(u) ->
+        users.unverified.noCV.profile.ITB.self = users.unverified.noCV.profile.self.filter((u) ->
           u.ITB
         )
+
         userCount = {
           total: total,
           verified: {
@@ -220,10 +246,13 @@ module.exports = (robot) ->
                 others: {
                   number: users.verified.CV.profile.self.length - users.verified.CV.profile.UI.self.length - users.verified.CV.profile.ITB.self.length
                 }
+              },
+              'no Profile': {
+                number: users.verified.CV.self.length - users.verified.CV.profile.self.length
               }
             },
             'no CV': {
-              number: users.verified.noCV.self.length
+              number: users.verified.noCV.self.length,
               profile: {
                 number: users.verified.noCV.profile.self.length,
                 UI: {
@@ -235,6 +264,9 @@ module.exports = (robot) ->
                 others: {
                   number: users.verified.noCV.profile.self.length - users.verified.noCV.profile.UI.self.length - users.verified.noCV.profile.ITB.self.length
                 }
+              },
+              'no Profile': {
+                number: users.verified.noCV.self.length - users.verified.noCV.profile.self.length
               }
             }  
           },
@@ -253,10 +285,13 @@ module.exports = (robot) ->
                 others: {
                   number: users.unverified.CV.profile.self.length - users.unverified.CV.profile.UI.self.length - users.unverified.CV.profile.ITB.self.length
                 }
+              },
+              'no Profile': {
+                number: users.unverified.CV.self.length - users.unverified.CV.profile.self.length
               }
             },
             'no CV': {
-              number: users.unverified.noCV.self.length
+              number: users.unverified.noCV.self.length,
               profile: {
                 number: users.unverified.noCV.profile.self.length,
                 UI: {
@@ -268,13 +303,16 @@ module.exports = (robot) ->
                 others: {
                   number: users.unverified.noCV.profile.self.length - users.unverified.noCV.profile.UI.self.length - users.unverified.noCV.profile.ITB.self.length
                 }
+              },
+              'no Profile': {
+                number: users.unverified.noCV.self.length - users.unverified.noCV.profile.self.length
               }
             }  
           }
         }
         fields = ['email', 'referral', 'resume', 'isVerified', 'Profile', 'UI', 'ITB']
         json2csv {
-          data: users,
+          data: allUsers,
           fields: fields
         }, (err, csv) ->
           if err
