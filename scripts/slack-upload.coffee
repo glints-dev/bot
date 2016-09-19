@@ -85,7 +85,7 @@ module.exports = (robot) ->
     startDate = res.match[3]
     endDate = res.match[4]
     if !country or !startDate or !endDate
-      res.send "Bodoh, please indicate the country. `show me the referral <refCode> in <sg or id> from <isoDate> to <isoDate>`. But out of the kindness of my metal heart, I'm assuming Indonesia and forever"
+      res.send ":japanese_ogre: Please indicate the country. `show me the referral <refCode> in <sg or id> from <isoDate> to <isoDate>`. But out of the kindness of my metal heart, I'm assuming Indonesia and forever"
       country = 'id'
       startDate = '01-01-2000'
       endDate = '01-01-3000'
@@ -106,7 +106,7 @@ module.exports = (robot) ->
         allUsers = result.rows
         total = allUsers.length
         if total == 0
-            res.reply "Bodoh, no users registered under this referral code! :japanese_ogre:"
+            res.reply ":japanese_ogre: No users registered under this referral code!"
             return
         users = {
           verified: {
