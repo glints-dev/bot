@@ -18,6 +18,7 @@ conString_id = process.env.HUBOT_PSQL_ID_STRING
 
 module.exports = (robot) ->
     robot.respond /show me the (?:ITB|UI)(?: from ((?:\d|\-)+) to ((?:\d|\-)+))?/i, (res) ->
+        startDate = res.match[1]
         endDate = res.match[2]
         if !startDate or !endDate
             res.send ":japanese_ogre: show me the [ITB|UI] from <YYYY-MM-DD> to <YYYY-MM-DD>. But I'll assume forever."
