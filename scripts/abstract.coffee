@@ -8,7 +8,7 @@
 #   None
 #
 # Commands:
-#   hubot abstract <topic> - Prints a nice abstract of the given topic
+#   hubot [abs|abstract|explain|define] <topic> - Prints a nice abstract of the given topic
 #
 # Author:
 #   tantalor

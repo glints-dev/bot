@@ -8,7 +8,7 @@
 #   HUBOT_PSQL_ID_STRING
 #
 # Commands:
-#   show me the <itb|ui>
+#   show me the <UI|ITB> from <YYYY-MM-DD> to <YYYY-MM-DD>
 #
 # Author:
 #   Ying Cong

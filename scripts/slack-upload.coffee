@@ -6,10 +6,12 @@
 #
 # Configuration:
 #   HUBOT_SLACK_TOKEN
+#   HUBOT_PSQL_SG_STRING
+#   HUBOT_PSQL_ID_STRING
 #
 # Commands:
 #   show me the applicants for job <id>
-#   show me the referral <refCode> in <id|sg>
+#   show me the referral <refCode|%> in <id|sg> from <YYYY-MM-DD> to <YYYY-MM-DD>
 #   show me the weekly stats of <id|sg>
 #
 # Author:

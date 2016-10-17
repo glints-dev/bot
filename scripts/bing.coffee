@@ -8,7 +8,7 @@
 #   HUBOT_BING_ACCOUNT_KEY
 #
 # Commands:
-#   bing image <query> - Queries Bing Images for <query> & returns a random result from top 50
+#   hubot image <query> - Queries Bing Images for <query> & returns a random result from top 50
 #
 # Author:
 #   Brandon Satrom
@@ -16,7 +16,7 @@
 bingAccountKey = process.env.HUBOT_BING_ACCOUNT_KEY
 
 module.exports = (robot) ->
-  robot.hear /image (.+)/i, (msg) ->
+  robot.hear /image (.+)/i, (msg) p
     imageMe msg, msg.match[1], (url) ->
       msg.send url
 
