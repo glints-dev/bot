@@ -16,7 +16,7 @@
 bingAccountKey = process.env.HUBOT_BING_ACCOUNT_KEY
 
 module.exports = (robot) ->
-  robot.hear /image (.+)/i, (msg) p
+  robot.hear /image (.+)/i, (msg) ->
     imageMe msg, msg.match[1], (url) ->
       msg.send url
 
