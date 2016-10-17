@@ -12,15 +12,14 @@
 #   None
 #
 # Commands:
-#   hubot [abs|abstract|explain|define] <topic> - Prints a nice abstract of the given topic
-#   hubot show me (active|users|jobs|applications|companies|candidates|summary) for (today|yesterday|this week|last week|this month|last month|total)
 #   ninja
 #   ninja help
-#   unlock -[id|sg] <jobId>
-#   grant -[id|sg] <companyId> till <YYYY-MM-DD>
-#   swallow -[id|sg] <companyId>
-#   show me the talent <email|userId> in <sg|id>
-#   show me the [rupiah|sgd|beta] from <YYYY-MM-DD> to <YYYY-MM-DD> [with trend]
+#   unlock -(id|sg) <jobId>
+#   grant -(id|sg) <companyId> till <YYYY-MM-DD>
+#   swallow -(id|sg) <companyId>
+#   hubot show me (active|users|jobs|applications|companies|candidates|summary) for (today|yesterday|this week|last week|this month|last month|total)
+#   hubot show me the talent (email|userId) in (sg|id)
+#   hubot show me the (rupiah|sgd|beta) from <YYYY-MM-DD> to <YYYY-MM-DD> [with trend]
 #
 # Author:
 #   Seah Ying Cong
