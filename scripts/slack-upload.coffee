@@ -346,7 +346,7 @@ module.exports = (robot) ->
     pg.connect conString_sg, (err, client, done) ->
       if err
           return console.error 'Error fetching client from pool', err
-      client.query "SELECT \"firstName\", \"lastName\", \"email\", \"status\", \"U\". \"resume\", \"A\".\"createdAt\" as \"ApplicationDate\" FROM \"Applications\" AS \"A\", \"Users\" AS \"U\", \"Profiles\" AS \"C\" WHERE \"A\".\"ApplicantId\" = \"U\".id  and \"A\".\"ApplicantProfileId\" = \"C\".\"id\" and \"JobId\" = $1;", [jobId] ,(err, result) ->
+      client.query "SELECT \"firstName\", \"lastName\", \"email\", \"status\", \"U\". \"resume\", \"A\".\"createdAt\" as \"ApplicationDate\" FROM \"Applications\" AS \"A\", \"Users\" AS \"U\" WHERE \"A\".\"ApplicantId\" = \"U\".id  and \"JobId\" = $1;", [jobId] ,(err, result) ->
         done()
         if err
           return console.error 'Error running query', err
