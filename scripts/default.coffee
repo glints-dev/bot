@@ -184,7 +184,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'clarechai', 'qinen', 'oswaldyeo', 'esther', 'gladys', 'stevesutanto', 'janlee94', 'yasmin']
+  authorized = ['yingcong', 'tohjiaxin', 'qinen', 'oswaldyeo', 'esther', 'gladys', 'stevesutanto', 'farizramlan', 'yasmin', 'ershannyaulia', 'vaniayutami']
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
