@@ -184,7 +184,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'tohjiaxin', 'qinen', 'oswaldyeo', 'esther', 'gladys', 'stevesutanto', 'farizramlan', 'yasmin', 'ershannyaulia', 'vaniayutami']
+  authorized = ['yingcong', 'tohjiaxin', 'qinen', 'oswaldyeo', 'gladys', 'stevesutanto', 'yasmin', 'ershannyaulia', 'vaniayutami']
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
@@ -221,6 +221,37 @@ module.exports = (robot) ->
       res.send 'Blub blub blub! Did anyone say you have the face and brain of a goldfish?'
       return
 
+
+  robot.respond /delete company\ -(sg|id)\ (\d+)/i, (res) ->
+    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+      country = res.match[1]
+      coId = res.match[2]
+      switch country
+        when 'sg'
+          conString = conString_sg
+          domain = 'com'
+        when 'id'
+          conString = conString_id
+          domain = 'id'
+        else 
+          conString = conString_sg
+      pg.connect conString, (err, client, done) ->
+        if err
+          return console.error 'Error fetching client from pool', err
+        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [coId], (err, result) ->
+          done()
+          if err
+            return console.error 'Error running query', err
+          co = result.rows[0]
+          if !co
+            res.send 'Yo, the company doesn\'t exist, which is also the state of your brain.'
+          else
+            res.send '#{co['name']} of id #{co['id']} and all its jobs have been deleted.'
+          return
+        return
+    else
+      res.send 'Naughty being, you are pushing your luck again.'
+      return
 
   robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
