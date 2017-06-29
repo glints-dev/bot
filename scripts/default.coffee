@@ -184,7 +184,7 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'tohjiaxin', 'qinen', 'oswaldyeo', 'esther', 'gladys', 'stevesutanto', 'farizramlan', 'yasmin', 'ershannyaulia', 'vaniayutami']
+  authorized = ['yingcong', 'tohjiaxin', 'qinen', 'oswaldyeo', 'gladys', 'stevesutanto', 'yasmin', 'ershannyaulia', 'vaniayutami']
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
@@ -220,7 +220,6 @@ module.exports = (robot) ->
     else
       res.send 'Blub blub blub! Did anyone say you have the face and brain of a goldfish?'
       return
-
 
   robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
