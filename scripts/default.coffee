@@ -221,10 +221,6 @@ module.exports = (robot) ->
       res.send 'Blub blub blub! Did anyone say you have the face and brain of a goldfish?'
       return
 
-  robot.respond /delete\ company\ -(sg|id)\ (\d+)/i, (res) ->
-    res.send 'Are you supremely sure of yourself?'
-    return 
-
   robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       country = res.match[1]
