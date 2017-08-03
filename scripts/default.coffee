@@ -20,6 +20,7 @@
 #   hubot show me (active|users|jobs|applications|companies|candidates|summary) for (today|yesterday|this week|last week|this month|last month|total)
 #   hubot show me the talent (email|userId) in (sg|id)
 #   hubot show me the (rupiah|sgd|beta) from <YYYY-MM-DD> to <YYYY-MM-DD> [with trend]
+#   hubot change <email> in [id|sg] to [candidate|company]
 #
 # Author:
 #   Seah Ying Cong
