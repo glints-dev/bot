@@ -209,7 +209,7 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId>` to add to ops@glints.com'
+        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId>` to add to ops@glints.com\n`change <email> in [id|sg] to [candidate|company]`'
         setTimeout(->
           authenticated = false
           return
@@ -219,6 +219,46 @@ module.exports = (robot) ->
         return
     else
       res.send 'Blub blub blub! Did anyone say you have the face and brain of a goldfish?'
+      return
+
+  robot.respond /change ((?:(?:[^<>()\[\]\\.,;:\s@"]+(?:\.[^<>()\[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(?:(?:[a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))) in (id|sg) to (company|candidate)/i, (res) ->
+    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+      email = res.match[1]
+      country = res.match[2]
+      role = res.match[3].toUpperCase()
+      switch country
+        when 'sg'
+          conString = conString_sg
+          domain = 'com'
+        when 'id'
+          conString = conString_id
+          domain = 'id'
+        else
+          conString = conString_sg
+      pg.connect conString, (err, client, done) ->
+        if err
+          return console.error 'Error fetching client from pool', err
+        client.query "SELECT * FROM \"Users\" WHERE \"email\" = $1", [email], (err, result) ->
+          done()
+          if err
+            return console.error 'Error running query', err
+          user = result.rows[0]
+          if !user
+            res.send 'Hey thick skull, there\'s no such user.'
+            return
+          else if user.role == role
+            res.send "Splendid, twit, the user is already a #{role.toLowerCase()}. Hope you enjoyed wasting my time."
+            return
+          else
+            client.query "UPDATE \"Users\" SET role=$1 WHERE email = $2", [role, email], (err, result) ->
+              done()
+              if err
+                return console.error 'Error running query', err
+              else
+                res.send "Congratulations, user has been switched from #{user.role.toLowerCase()} to #{role.toLowerCase()}"
+                return
+    else
+      res.send 'You are one unauthorized fluffy gobbsucking thing. :sensei:'
       return
 
   robot.respond /unlock\ -(sg|id)\ (\d+)/i, (res) ->
