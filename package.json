@@ -5,7 +5,7 @@
   "author": "Ying Cong <yingcong@glints.com>",
   "description": "Just A Rather Very Intelligent System",
   "engines": {
-    "node": "5.1.x"
+    "node": "7.x.x"
   },
   "scripts": {
     "start": "node index.js"
