@@ -190,6 +190,7 @@ module.exports = (robot) ->
 
   robot.respond /ninja/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
+      console.log res.message.user.name
       if !authenticated
         ask = true
         res.send 'Please enter password within the next minute:'
