@@ -17,6 +17,7 @@
 #   unlock -(id|sg) <jobId>
 #   grant -(id|sg) <companyId> till <YYYY-MM-DD>
 #   swallow -(id|sg) <companyId>
+#   index -(id|sg)
 #   hubot show me (active|users|jobs|applications|companies|candidates|summary) for (today|yesterday|this week|last week|this month|last month|total)
 #   hubot show me the talent (email|userId) in (sg|id)
 #   hubot show me the (rupiah|sgd|beta) from <YYYY-MM-DD> to <YYYY-MM-DD> [with trend]
@@ -381,6 +382,30 @@ module.exports = (robot) ->
         return
     else
       res.send 'Bloody hell, please don\'t push your luck.'
+      return
+
+  robot.respond /index\ -(sg|id)/, (res) ->
+    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+        country = res.match[1]
+        switch country
+            when 'sg'
+                domain = 'com'
+                adminKey = glints_sg_admin_key
+            when 'id'
+                domain = 'id'
+                adminKey = glints_id_admin_key
+            else
+                domain = 'com'
+                adminKey = glints_sg_admin_key
+        endpoint = "https://api.glints.#{domain}/api/elasticsearch"
+        return res.http(endpoint)
+          .header('Authorization', "Bearer #{adminKey}")
+          .get() (err, _, body) ->
+            return res.send "ARGH, #{err}" if err
+            console.log(body)
+            return res.send 'Congratulations, task running successfully.'
+    else
+      res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
 
   robot.respond /swallow\ -(sg|id)\ (\d+)/i, (res) ->
