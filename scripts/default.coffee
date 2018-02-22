@@ -212,7 +212,7 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId>` to add to ops@glints.com\n`change <email> in [id|sg] to [candidate|company]`'
+        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId>` to add to ops@glints.com\n`change <email> in [id|sg] to [candidate|company]`\n`index -[id|sg]` to index candidates for TalentHunt'
         setTimeout(->
           authenticated = false
           return
@@ -402,8 +402,16 @@ module.exports = (robot) ->
           .header('Authorization', "Bearer #{adminKey}")
           .get() (err, _, body) ->
             return res.send "ARGH, #{err}" if err
-            console.log(body)
-            return res.send 'Congratulations, task running successfully.'
+            try
+                data = JSON.parse(body)
+                if data.data
+                    return res.send "Congratulations! #{data.data}."
+                else
+                    throw new Error
+            catch e
+                return res.send "Sorry! #{body}."
+            
+                
     else
       res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
