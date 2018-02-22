@@ -185,12 +185,11 @@ module.exports = (robot) ->
 
   ask = false
   authenticated = false
-  authorized = ['yingcong', 'oswaldyeo', 'stevesutanto', 'yasmin', 'ershannyaulia', 'bryanlee', 'chaochaobae', 'mrscba', 'deasy.afni', 'tutik', 'giestavia', 'ria', 'anisa', 'luciano', 'intan', 'russellkua', 'yeehwee', 'haryo', 'fadilhamidy', 'mayastephany', 'stevensang']
+  authorized = ['yingcong', 'oswaldyeo', 'stevesutanto', 'yasmin', 'ershannyaulia', 'bryanlee', 'chaochaobae', 'mrscba', 'deasy.afni', 'tutik', 'giestavia', 'ria', 'anisa', 'luciano', 'intan', 'russellkua', 'yeehwee', 'haryo', 'fadilhamidy', 'mayastephany', 'steven.sang']
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized
-      console.log res.message.user.name
       if !authenticated
         ask = true
         res.send 'Please enter password within the next minute:'
@@ -202,6 +201,7 @@ module.exports = (robot) ->
         res.send 'Already authorized, please proceed.'
         return
     else
+      console.log(res.message.user.name)
       res.send 'Sorry, this is a Clare Bear privilege, and you\'re neither a Clare nor a bear'
       return
 
