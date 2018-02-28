@@ -309,7 +309,7 @@ module.exports = (robot) ->
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Job unlocked at http://glints." + domain + "/dashboard/jobs/#{jobId}"
+                      res.send "Success! Job unlocked at http://glints." + domain + "/opportunities/jobs/#{jobId}"
                       return
                     else
                       res.send "Oops something went wrong!"
@@ -373,7 +373,7 @@ module.exports = (robot) ->
                 return console.error 'Error running query', err
               company2 = result.rows[0]
               if company2 and company2["isVerified"] and company2["PlanId"] == 3 and company2["planValidUntil"]
-                res.send "Success! #{company2.name} granted talent search until #{company2.planValidUntil} at http://glints." + domain + "/dashboard/companies/#{companyId}"
+                res.send "Success! #{company2.name} granted talent search until #{company2.planValidUntil} at http://glints." + domain + "/companies/#{companyId}"
                 return
               else
                 res.send "Oops, something went wrong. Please try again."
@@ -410,8 +410,7 @@ module.exports = (robot) ->
                     throw new Error
             catch e
                 return res.send "Sorry! #{body}."
-            
-                
+
     else
       res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
@@ -460,7 +459,7 @@ module.exports = (robot) ->
                     if err
                       return console.error 'Error running query', err
                     if result.rows.length>0
-                      res.send "Success! Company added at http://glints." + domain + "/dashboard/companies/#{companyId}"
+                      res.send "Success! Company added at http://glints." + domain + "/companies/#{companyId}"
                       return
                     else
                       res.send "Oops something went wrong!"
