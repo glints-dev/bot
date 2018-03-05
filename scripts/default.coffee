@@ -16,7 +16,7 @@
 #   ninja help
 #   unlock -(id|sg) <jobId>
 #   grant -(id|sg) <companyId> till <YYYY-MM-DD>
-#   swallow -(id|sg) <companyId>
+#   swallow -(id|sg) <companyId> for <email>
 #   index -(id|sg)
 #   hubot show me (active|users|jobs|applications|companies|candidates|summary) for (today|yesterday|this week|last week|this month|last month|total)
 #   hubot show me the talent (email|userId) in (sg|id)
@@ -212,7 +212,7 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId>` to add to ops@glints.com\n`change <email> in [id|sg] to [candidate|company]`\n`index -[id|sg]` to index candidates for TalentHunt'
+        res.send '`unlock -[id|sg] <jobId>` to unlock jobs in either indonesia or singapore \n`grant -[id|sg] <companyId> till <YYYY-MM-DD>` to grant talent search in either indonesia or singapore\n`swallow -[id|sg] <companyId> for <email>` to add to email account\n`change <email> in [id|sg] to [candidate|company]`\n`index -[id|sg]` to index candidates for TalentHunt'
         setTimeout(->
           authenticated = false
           return
@@ -415,19 +415,18 @@ module.exports = (robot) ->
       res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
 
-  robot.respond /swallow\ -(sg|id)\ (\d+)/i, (res) ->
+  robot.respond /swallow\ -(sg|id)\ (\d+) for ([\w|@|\.]+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       country = res.match[1]
       companyId = res.match[2]
+      email = res.match[3]
       switch country
         when 'sg'
           conString = conString_sg
           domain = 'com'
-          userId = 12112
         when 'id'
           conString = conString_id
           domain = 'id'
-          userId = 20528
         else 
           conString = conString_sg
       pg.connect conString, (err, client, done) ->
@@ -443,27 +442,38 @@ module.exports = (robot) ->
             res.send 'Yo, the company doesn\'t exist, man! And neither does your brain.'
             return
           else
-            client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
+            client.query "SELECT * FROM \"Users\" WHERE email = $1", [email], (err, result) ->
               done()
               if err
                 return console.error 'Error running query', err
-              if result.rows.length>0
-                res.send 'Dang, you are already linked, time-waster!'
+
+              user = result.rows[0]
+              if !user
+                res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
+                return
               else
-                client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), $1, $2)", [companyId, userId], (err,result) ->
+                userId = user.id
+                client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
                   done()
                   if err
                     return console.error 'Error running query', err
-                  client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
-                    done()
-                    if err
-                      return console.error 'Error running query', err
-                    if result.rows.length>0
-                      res.send "Success! Company added at http://glints." + domain + "/companies/#{companyId}"
-                      return
-                    else
-                      res.send "Oops something went wrong!"
-                      return
+                  if result.rows.length>0
+                    res.send 'Dang, you are already linked, time-waster!'
+                  else
+                    client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), $1, $2)", [companyId, userId], (err,result) ->
+                      done()
+                      if err
+                        return console.error 'Error running query', err
+                      client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
+                        done()
+                        if err
+                          return console.error 'Error running query', err
+                        if result.rows.length>0
+                          res.send "Success! Company added, check it at https://employers.glints.#{domain}/dashboard"
+                          return
+                        else
+                          res.send "Oops something went wrong!"
+                          return
           return
         return
     else
@@ -471,7 +481,7 @@ module.exports = (robot) ->
       return
 
   robot.respond /ninja help/i, (res) ->
-    res.send "`swallow -[sg|id] <companyId>`\n`grant -[sg|id] <companyId> till <expiryDate| YYYY-MM-DD>`\n`unlock -[sg|id] <jobId>`"
+    res.send "`swallow -[sg|id] <companyId> for <email>`\n`grant -[sg|id] <companyId> till <expiryDate| YYYY-MM-DD>`\n`unlock -[sg|id] <jobId>`"
     return
   
   validateEmail = (email) ->
