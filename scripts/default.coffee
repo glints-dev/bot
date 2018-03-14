@@ -452,6 +452,7 @@ module.exports = (robot) ->
                 res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
                 return
               else
+              console.log(res.message.email)
                 userId = user.id
                 client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
                   done()
