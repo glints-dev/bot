@@ -449,6 +449,7 @@ module.exports = (robot) ->
 
               user = result.rows[0]
               if !user
+               console.log(res.message.email)
                 res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
                 return
               else
