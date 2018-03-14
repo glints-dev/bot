@@ -452,7 +452,6 @@ module.exports = (robot) ->
                 res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
                 return
               else
-              console.log(res.message.email)
                 userId = user.id
                 client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
                   done()
@@ -484,10 +483,12 @@ module.exports = (robot) ->
   robot.respond /ninja help/i, (res) ->
     res.send "`swallow -[sg|id] <companyId> for <email>`\n`grant -[sg|id] <companyId> till <expiryDate| YYYY-MM-DD>`\n`unlock -[sg|id] <jobId>`"
     return
-  
+
+  console.log(res.message.email)  
   validateEmail = (email) ->
     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     re.test email
+
 
   robot.respond /show me the talent (\S+)(?: in (sg|id))?/i, (res) ->
     identifier = res.match[1]
