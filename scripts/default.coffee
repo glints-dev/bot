@@ -484,7 +484,6 @@ module.exports = (robot) ->
     res.send "`swallow -[sg|id] <companyId> for <email>`\n`grant -[sg|id] <companyId> till <expiryDate| YYYY-MM-DD>`\n`unlock -[sg|id] <jobId>`"
     return
 
-  console.log(res.message.email)  
   validateEmail = (email) ->
     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     re.test email
