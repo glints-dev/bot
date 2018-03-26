@@ -415,7 +415,7 @@ module.exports = (robot) ->
       res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
 
-  robot.respond /swallow\ -(sg|id)\ (\d+) for ([\w|@|\.]+)/i, (res) ->
+  robot.respond /swallow\ -(sg|id)\ (\d+) for ([\w|\-|\+|@|\.]+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       country = res.match[1]
       companyId = res.match[2]
