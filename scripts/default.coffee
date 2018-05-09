@@ -16,8 +16,9 @@
 #   ninja help
 #   swallow <companyId> for <email>
 #   index talenthunt
-#   hubot show me the talent (email|userId)
+#   hubot show me the talent (email)
 #   hubot change <email> to [candidate|company]
+#   hubot verify <email>
 #
 # Author:
 #   Seah Ying Cong
@@ -64,7 +65,7 @@ module.exports = (robot) ->
         authenticated = true
         ask = false
         res.send 'I have just authorized you, please proceed. You have 10 minutes.'
-        res.send '`swallow <companyId> for <email>` to add to email account\n`change <email> to [candidate|company]`\n`index talenthunt` to index candidates for TalentHunt'
+        res.send '`swallow <companyId> for <email>` to add to email account\n`change <email> to [candidate|company] to change the role of a user account`\n`index talenthunt` to index candidates for TalentHunt\n`verify <email>` to verify a Glints account\n`show me the talent <email>` to pull out the talent details on Glints'
         setTimeout(->
           authenticated = false
           return
@@ -106,7 +107,7 @@ module.exports = (robot) ->
       res.send 'You are one unauthorized fluffy gob-sucking chunk of flesh. :sensei:'
       return
 
-  robot.respond /index\ talenthunt/, (res) ->
+  robot.respond /index talenthunt/, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
         endpoint = "https://api.glints.com/api/elasticsearch"
         return res.http(endpoint)
@@ -126,7 +127,7 @@ module.exports = (robot) ->
       res.send 'You have ZERO rights to touch Talent Hunt. Buzz off. :lion_dance:'
       return
 
-  robot.respond /swallow\ ([a-zA-Z0-9-]+)\ for\ ([\w|\-|\+|@|\.]+)/i, (res) ->
+  robot.respond /swallow ([a-zA-Z0-9-]+) for ([\w|\-|\+|@|\.]+)/i, (res) ->
     if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
       companyId = res.match[1]
       email = res.match[2]
@@ -193,20 +194,15 @@ module.exports = (robot) ->
   robot.respond /show me the talent (\S+)/i, (res) ->
     identifier = res.match[1]
     if !identifier
-      res.send "Please grow a brain, the format is `show me the talent <userId or email> in <sg or id>`"
+      res.send "Please grow a brain, the format is `show me the talent <email>`"
       return
-    if isNaN(identifier)
-      if !validateEmail identifier
-        res.send 'I know your feeble brain wants to type an email, but the format is simply not valid. Try again.'
-        return
-      suffix =  "WHERE email = $1";
-    else
-      identifier = parseInt(identifier)
-      suffix =  "WHERE id = $1";
+    if !validateEmail identifier
+      res.send 'I know your feeble brain wants to type an email, but the format is simply not valid. Try again.'
+      return
     pg.connect conString, (err, client, done) ->
       if err
         return console.error 'Error fetching client from pool', err
-      query = 'SELECT "profilePic", "id", "intro", "firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" ' + suffix
+      query = 'SELECT "profilePic", "id", "intro", "firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" WHERE email = $1'
       client.query query, [identifier], (err, result) ->
         done()
         if err
@@ -224,3 +220,34 @@ module.exports = (robot) ->
         else
           res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
           return
+
+  robot.respond /verify (\S+)/i, (res) ->
+    if res.message.user.name not in authorized or res.message.user.room not in authorized or !authenticated
+      res.send 'You are a sad unauthorized clump of atoms. Go back to unauthorizedland.'
+      return
+    email = res.match[1]
+    if !validateEmail email
+      res.send 'Touch your heart and ask if that is a valid email.'
+      return
+    pg.connect conString, (err, client, done) ->
+        if err
+          return console.error 'Error fetching client from pool', err
+        client.query 'SELECT "emailVerificationToken", "emailVerificationTokenExpiry" FROM "Users" WHERE email = $1', [email], (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
+            if result.rows.length > 0
+              userObject = result.rows[0]
+              if userObject.emailVerificationToken == null and userObject.emailVerificationTokenExpiry == null
+                res.send 'This user is already verified. Just like bitcoin, you are a waste of computing resources.'
+                return
+              else
+                client.query 'UPDATE "Users" set "emailVerificationToken" = null, "emailVerificationTokenExpiry" = null where email = $1', [email], (err, result) ->
+                    done()
+                    if err
+                      return console.error 'Error running query', err
+                    if result.rowCount == 1
+                      res.send 'Splendid me, the user is now verified. You better be darn sure you know what you are doing.'
+            else
+              res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
+              return
