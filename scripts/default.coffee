@@ -30,10 +30,13 @@ adminKey = process.env.HUBOT_GLINTS_ADMIN_KEY_SG
 
 request = require 'request'
 moment = require 'moment'
-pg = require 'pg'
+{ Pool } = require 'pg'
 spark = require 'textspark'
 
 module.exports = (robot) ->
+  pool = new Pool {
+    connectionString: conString
+  }
 
 # Ninja
 
@@ -81,28 +84,25 @@ module.exports = (robot) ->
     if res.message.user.name in authorized and !!authenticated
       email = res.match[1]
       role = res.match[2].toUpperCase()
-      pg.connect conString, (err, client, done) ->
+      pool.query "SELECT * FROM \"Users\" WHERE \"email\" = $1", [email], (err, result) ->
+        done()
         if err
-          return console.error 'Error fetching client from pool', err
-        client.query "SELECT * FROM \"Users\" WHERE \"email\" = $1", [email], (err, result) ->
-          done()
-          if err
-            return console.error 'Error running query', err
-          user = result.rows[0]
-          if !user
-            res.send 'Hey thick skull, there\'s no such user.'
-            return
-          else if user.role == role
-            res.send "Splendid, twit, the user is already a #{role.toLowerCase()}. Hope you enjoyed wasting my time."
-            return
-          else
-            client.query "UPDATE \"Users\" SET role=$1 WHERE email = $2", [role, email], (err, result) ->
-              done()
-              if err
-                return console.error 'Error running query', err
-              else
-                res.send "Congratulations, user has been switched from #{user.role.toLowerCase()} to #{role.toLowerCase()}"
-                return
+          return console.error 'Error running query', err
+        user = result.rows[0]
+        if !user
+          res.send 'Hey thick skull, there\'s no such user.'
+          return
+        else if user.role == role
+          res.send "Splendid, twit, the user is already a #{role.toLowerCase()}. Hope you enjoyed wasting my time."
+          return
+        else
+          pool.query "UPDATE \"Users\" SET role=$1 WHERE email = $2", [role, email], (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
+            else
+              res.send "Congratulations, user has been switched from #{user.role.toLowerCase()} to #{role.toLowerCase()}"
+              return
     else
       res.send 'You are one unauthorized fluffy gob-sucking chunk of flesh. :sensei:'
       return
@@ -131,51 +131,48 @@ module.exports = (robot) ->
     if res.message.user.name in authorized and !!authenticated
       companyId = res.match[1]
       email = res.match[2]
-      pg.connect conString, (err, client, done) ->
+      pool.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId], (err, result) ->
+        done()
         if err
-          return console.error 'Error fetching client from pool', err
-        client.query "SELECT * FROM \"Companies\" WHERE \"id\" = $1", [companyId], (err, result) ->
-          done()
-          if err
-            return console.error 'Error running query', err
+          return console.error 'Error running query', err
 
-          company = result.rows[0]
-          if !company
-            res.send 'Yo, the company doesn\'t exist, man! And neither does your brain.'
-            return
-          else
-            client.query "SELECT * FROM \"Users\" WHERE email = $1", [email], (err, result) ->
-              done()
-              if err
-                return console.error 'Error running query', err
+        company = result.rows[0]
+        if !company
+          res.send 'Yo, the company doesn\'t exist, man! And neither does your brain.'
+          return
+        else
+          pool.query "SELECT * FROM \"Users\" WHERE email = $1", [email], (err, result) ->
+            done()
+            if err
+              return console.error 'Error running query', err
 
-              user = result.rows[0]
-              if !user
-                res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
-                return
-              else
-                userId = user.id
-                client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
-                  done()
-                  if err
-                    return console.error 'Error running query', err
-                  if result.rows.length>0
-                    res.send 'Dang, you are already linked, time-waster!'
-                  else
-                    client.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), $1, $2)", [companyId, userId], (err,result) ->
+            user = result.rows[0]
+            if !user
+              res.send 'Ooo my gawd, this user does not exist in this space-time continuum. Wake up!'
+              return
+            else
+              userId = user.id
+              pool.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
+                done()
+                if err
+                  return console.error 'Error running query', err
+                if result.rows.length>0
+                  res.send 'Dang, you are already linked, time-waster!'
+                else
+                  pool.query "INSERT INTO \"UserCompanies\" (\"createdAt\",\"updatedAt\",\"CompanyId\",\"UserId\") VALUES (now(), now(), $1, $2)", [companyId, userId], (err,result) ->
+                    done()
+                    if err
+                      return console.error 'Error running query', err
+                    pool.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
                       done()
                       if err
                         return console.error 'Error running query', err
-                      client.query "SELECT * FROM \"UserCompanies\" WHERE \"CompanyId\" = $1 AND \"UserId\" = $2", [companyId, userId], (err, result) ->
-                        done()
-                        if err
-                          return console.error 'Error running query', err
-                        if result.rows.length>0
-                          res.send "Success! Company added, check it at https://employers.glints.com/dashboard"
-                          return
-                        else
-                          res.send "Oops something went wrong!"
-                          return
+                      if result.rows.length>0
+                        res.send "Success! Company added, check it at https://employers.glints.com/dashboard"
+                        return
+                      else
+                        res.send "Oops something went wrong!"
+                        return
           return
         return
     else
@@ -199,27 +196,23 @@ module.exports = (robot) ->
     if !validateEmail identifier
       res.send 'I know your feeble brain wants to type an email, but the format is simply not valid. Try again.'
       return
-    pg.connect conString, (err, client, done) ->
+    pool.query query, [identifier], (err, result) ->
+      done()
       if err
-        return console.error 'Error fetching client from pool', err
-      query = 'SELECT "profilePic", "id", "intro", "firstName", "lastName", "city", "Nationality", "phone", "lastSeen", "resume" from "Users" WHERE email = $1'
-      client.query query, [identifier], (err, result) ->
-        done()
-        if err
-          return console.error 'Error running query', err
-        if result.rows.length > 0
-          sendArray = result.rows[0]
-          awsUrlSeed = 'http://s3-ap-southeast-1.amazonaws.com/'
-          countryUrl = 'glints-dashboard/'
-          sendArray.resume = if sendArray.resume then awsUrlSeed + countryUrl + 'resume/' + sendArray.resume else null
-          sendArray.profilePic = if sendArray.profilePic then awsUrlSeed + countryUrl + 'profile-picture/' + sendArray.profilePic else null
-          for i of sendArray
-            if sendArray.hasOwnProperty(i)
-              res.send '*' + i  + ':* ' + sendArray[i]
-          return
-        else
-          res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
-          return
+        return console.error 'Error running query', err
+      if result.rows.length > 0
+        sendArray = result.rows[0]
+        awsUrlSeed = 'http://s3-ap-southeast-1.amazonaws.com/'
+        countryUrl = 'glints-dashboard/'
+        sendArray.resume = if sendArray.resume then awsUrlSeed + countryUrl + 'resume/' + sendArray.resume else null
+        sendArray.profilePic = if sendArray.profilePic then awsUrlSeed + countryUrl + 'profile-picture/' + sendArray.profilePic else null
+        for i of sendArray
+          if sendArray.hasOwnProperty(i)
+            res.send '*' + i  + ':* ' + sendArray[i]
+        return
+      else
+        res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
+        return
 
   robot.respond /verify (\S+)/i, (res) ->
     if res.message.user.name not in authorized or !authenticated
@@ -229,25 +222,22 @@ module.exports = (robot) ->
     if !validateEmail email
       res.send 'Touch your heart and ask if that is a valid email.'
       return
-    pg.connect conString, (err, client, done) ->
-        if err
-          return console.error 'Error fetching client from pool', err
-        client.query 'SELECT "emailVerificationToken", "emailVerificationTokenExpiry" FROM "Users" WHERE email = $1', [email], (err, result) ->
-            done()
-            if err
-              return console.error 'Error running query', err
-            if result.rows.length > 0
-              userObject = result.rows[0]
-              if userObject.emailVerificationToken == null and userObject.emailVerificationTokenExpiry == null
-                res.send 'This user is already verified. Just like bitcoin, you are a waste of computing resources.'
-                return
-              else
-                client.query 'UPDATE "Users" set "emailVerificationToken" = null, "emailVerificationTokenExpiry" = null where email = $1', [email], (err, result) ->
-                    done()
-                    if err
-                      return console.error 'Error running query', err
-                    if result.rowCount == 1
-                      res.send 'Splendid me, the user is now verified. You better be darn sure you know what you are doing.'
-            else
-              res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
-              return
+
+    pool.query 'SELECT "emailVerificationToken", "emailVerificationTokenExpiry" FROM "Users" WHERE email = $1', [email], (err, result) ->
+      if err
+        return console.error 'Error running query', err
+      if result.rows.length > 0
+        userObject = result.rows[0]
+        if userObject.emailVerificationToken == null and userObject.emailVerificationTokenExpiry == null
+          res.send 'This user is already verified. Just like bitcoin, you are a waste of computing resources.'
+          return
+        else
+          pool.query 'UPDATE "Users" set "emailVerificationToken" = null, "emailVerificationTokenExpiry" = null where email = $1', [email], (err, result) ->
+              done()
+              if err
+                return console.error 'Error running query', err
+              if result.rowCount == 1
+                res.send 'Splendid me, the user is now verified. You better be darn sure you know what you are doing.'
+      else
+        res.send '弱智, such a user doesn\'t exist. Sometimes, I hope you didn\'t too.'
+        return
