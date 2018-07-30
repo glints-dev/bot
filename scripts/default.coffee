@@ -60,7 +60,7 @@ module.exports = (robot) ->
       return
 
   robot.respond password, (res) ->
-    if res.message.user.name in authorized and res.message.user.room in authorized
+    if res.message.user.name in authorized
       if ask
         authenticated = true
         ask = false
@@ -78,7 +78,7 @@ module.exports = (robot) ->
       return
 
   robot.respond /change ((?:(?:[^<>()\[\]\\.,;:\s@"]+(?:\.[^<>()\[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(?:(?:[a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))) to (company|candidate)/i, (res) ->
-    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+    if res.message.user.name in authorized and !!authenticated
       email = res.match[1]
       role = res.match[2].toUpperCase()
       pg.connect conString, (err, client, done) ->
@@ -108,7 +108,7 @@ module.exports = (robot) ->
       return
 
   robot.respond /index talenthunt/, (res) ->
-    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+    if res.message.user.name in authorized and !!authenticated
         endpoint = "https://api.glints.com/api/elasticsearch"
         return res.http(endpoint)
           .header('Authorization', "Bearer #{adminKey}")
@@ -128,7 +128,7 @@ module.exports = (robot) ->
       return
 
   robot.respond /swallow ([a-zA-Z0-9-]+) for ([\w|\-|\+|@|\.]+)/i, (res) ->
-    if res.message.user.name in authorized and res.message.user.room in authorized and !!authenticated
+    if res.message.user.name in authorized and !!authenticated
       companyId = res.match[1]
       email = res.match[2]
       pg.connect conString, (err, client, done) ->
@@ -222,7 +222,7 @@ module.exports = (robot) ->
           return
 
   robot.respond /verify (\S+)/i, (res) ->
-    if res.message.user.name not in authorized or res.message.user.room not in authorized or !authenticated
+    if res.message.user.name not in authorized or !authenticated
       res.send 'You are a sad unauthorized clump of atoms. Go back to unauthorizedland.'
       return
     email = res.match[1]
