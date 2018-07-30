@@ -43,7 +43,7 @@ module.exports = (robot) ->
   password = new RegExp(ninjaPassword)
 
   robot.respond /ninja/i, (res) ->
-    if res.message.user.name in authorized and res.message.user.room in authorized
+    if res.message.user.name in authorized
       if !authenticated
         ask = true
         res.send 'Please enter password within the next minute:'
